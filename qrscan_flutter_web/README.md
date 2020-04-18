@@ -1,5 +1,9 @@
 # qrscan_flutter_web
 
+[Online demo](https://tekartik.github.io/app_camera.dart)
+
+## Setup
+
 In pubspec.yaml
 
 ```yaml
