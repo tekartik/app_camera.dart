@@ -9,7 +9,7 @@ dependencies:
       url: git://github.com/tekartik/app_camera.dart
       path: qrscan_flutter_web
       ref: dart2
-    version: '>=0.4.0'
+    version: '>=0.1.0'
 ...
 
 flutter:

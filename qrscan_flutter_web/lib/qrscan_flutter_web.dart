@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'src/scan_impl.dart' as impl;
+import 'src/scan_stub.dart' if (dart.library.html) 'src/scan_impl.dart' as impl;
 
 /// Popup a scan QR code page for maximum 1 minute.
 ///
