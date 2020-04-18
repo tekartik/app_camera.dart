@@ -1,4 +1,4 @@
-# camera_web
+# js_qr
 
 ## Setup
 
@@ -6,10 +6,10 @@ In `pubspec.yaml`
 
 ```yaml
 dependencies:
-  tekartik_camera_web:
+  tekartik_js_qr:
     git:
       url: git://github.com/tekartik/app_camera.dart
-      path: camera_web
+      path: js_qr
       ref: dart2
     version: '>=0.1.0'
 ```

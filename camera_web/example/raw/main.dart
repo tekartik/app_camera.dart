@@ -39,7 +39,7 @@ Future main() async {
       }
     }
 
-    write('getting stream');
+    write('getting stream deviceId ${deviceInfo.deviceId}');
     var stream = await mediaDevices.getUserMedia(GetUserMediaConstraint(
         video: GetUserMediaVideoConstraint(deviceId: deviceInfo.deviceId)));
     write('got stream');

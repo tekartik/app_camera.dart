@@ -1,0 +1,34 @@
+name: qrscan_flutter_web_example
+description: qrscan_flutter_web example
+publish_to: none
+
+version: 1.0.0+1
+
+environment:
+  sdk: ">=2.7.0 <3.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  tekartik_qrscan_flutter_web:
+    git:
+      url: git://github.com/tekartik/app_camera.dart
+      path: qrscan_flutter_web
+      ref: dart2
+    version: '>=0.1.0'
+  cupertino_icons: ^0.1.3
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+dependency_overrides:
+  tekartik_qrscan_flutter_web:
+    path: ../qrscan_flutter_web
+flutter:
+  uses-material-design: true
+
+  # To add assets to your application, add an assets section, like this:
+  assets:
+    # include js_qr javascript file
+    - packages/tekartik_js_qr/js_qr.js

@@ -53,16 +53,14 @@ Future main(List<String> arguments) async {
   }
 
   // Pure dart
-  for (var dir in <String>[
-    'camera_web',
-  ]) {
+  for (var dir in <String>['camera_web', 'js_qr']) {
     shell = shell.pushd(dir);
     await execute(() => dartCi(shell));
     shell = shell.popd();
   }
 
   // Flutter test
-  for (var dir in <String>[]) {
+  for (var dir in <String>['qrscan_flutter_web']) {
     shell = shell.pushd(dir);
     await execute(() async {
       // Use custom ci if available
