@@ -1,6 +1,6 @@
 name: tekartik_camera_web
 description: Camera web utilities
-
+version: '0.1.0'
 deploy_to: none
 
 environment:

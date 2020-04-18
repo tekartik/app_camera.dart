@@ -47,7 +47,9 @@ class MediaDevicesBrowser implements MediaDevices {
   @override
   Future<List<MediaDeviceInfo>> enumerateDevices() async {
     var jsMediaDeviceInfos =
-        await window.navigator.mediaDevices.enumerateDevices();
+        //await window.navigator.mediaDevices.enumerateDevices();
+        await promiseToFuture(
+            js_util.callMethod(_mediaDevices, 'enumerateDevices', [])) as List;
     return jsMediaDeviceInfos
         .map<MediaDeviceInfo>((jsMediaDeviceInfo) =>
             MediaDeviceInfoBrowser(jsMediaDeviceInfo as js.MediaDeviceInfo))

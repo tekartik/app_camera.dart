@@ -6,9 +6,9 @@ In `pubspec.yaml`
 
 ```yaml
 dependencies:
-  tekartik_qrscan_flutter_web:
+  tekartik_camera_web:
     git:
-      url: git://github.com/tekartik/app_camera_web.dart
+      url: git://github.com/tekartik/app_camera.dart
       path: camera_web
       ref: dart2
     version: '>=0.1.0'
