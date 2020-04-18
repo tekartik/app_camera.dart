@@ -53,9 +53,7 @@ Future main(List<String> arguments) async {
   }
 
   // Pure dart
-  for (var dir in <String>[
-    'camera_web',
-  ]) {
+  for (var dir in <String>['camera_web', 'js_qr']) {
     shell = shell.pushd(dir);
     await execute(() => dartCi(shell));
     shell = shell.popd();
