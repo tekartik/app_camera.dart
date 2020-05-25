@@ -32,7 +32,7 @@ Future main(List<String> arguments) async {
   var topDir = join('..');
   var parser = ArgParser();
   parser.addFlag('help', abbr: 'h');
-  parser.addFlag('parallel', abbr: 'p', defaultsTo: true);
+  parser.addFlag('parallel', abbr: 'p', defaultsTo: false);
 
   var results = parser.parse(arguments);
   if (results['help'] as bool) {

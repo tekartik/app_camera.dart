@@ -3,6 +3,7 @@ sudo: required
 dist: trusty
 dart:
   - stable
+  - beta
   - dev
 before_script:
   - pushd app_camera_support/
@@ -13,3 +14,6 @@ before_script:
 script:
   - pushd app_camera_support/
   - dart tool/run_ci.dart
+# matrix:
+#  allow_failures:
+#    - dart: dev
