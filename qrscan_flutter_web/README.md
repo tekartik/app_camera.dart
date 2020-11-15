@@ -1,5 +1,7 @@
 # qrscan_flutter_web
 
+Web support based on Cozmo jsQR.
+
 [Online demo](https://tekartik.github.io/app_camera.dart)
 
 ## Setup

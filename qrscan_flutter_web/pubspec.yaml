@@ -1,10 +1,10 @@
 name: tekartik_qrscan_flutter_web
 description: QR scan for flutter web
 version: 0.1.0
-deploy_to: none
+publish_to: none
 
 environment:
-  sdk: ">=2.7.0 <3.0.0"
+  sdk: '>=2.10.0-0 <3.0.0'
 
 dependencies:
   flutter:
@@ -25,7 +25,7 @@ dependencies:
 dev_dependencies:
   flutter_test:
     sdk: flutter
-
+  dev_test: '>=0.13.4+4'
 dependency_overrides:
   pedantic: '>=1.9.0'
 
