@@ -1,32 +1,9 @@
 import 'dart:io';
 
 import 'package:args/args.dart';
+import 'package:dev_test/package.dart';
 import 'package:path/path.dart';
 import 'package:process_run/shell.dart';
-
-Future dartCi(Shell shell) async {
-  await shell.run('''
-    
-pub get
-
-dartanalyzer --fatal-warnings --fatal-infos .
-# Check formatting
-dartfmt -n --set-exit-if-changed .
-pub run test
-    ''');
-}
-
-Future flutterCi(Shell shell) async {
-  await shell.run('''
-    
-flutter packages get
-flutter analyze
-# Check formatting
-flutter format -n --set-exit-if-changed .
-
-flutter test
-    ''');
-}
 
 Future main(List<String> arguments) async {
   var topDir = join('..');
@@ -54,9 +31,7 @@ Future main(List<String> arguments) async {
 
   // Pure dart
   for (var dir in <String>['camera_web', 'js_qr']) {
-    shell = shell.pushd(dir);
-    await execute(() => dartCi(shell));
-    shell = shell.popd();
+    await execute(() => packageRunCi(join(topDir, dir)));
   }
 
   // Flutter test
@@ -76,7 +51,7 @@ dart ${shellArgument(customCi)}
 
     ''');
       } else {
-        await flutterCi(shell);
+        await packageRunCi(join(topDir, dir));
       }
     });
     shell = shell.popd();
