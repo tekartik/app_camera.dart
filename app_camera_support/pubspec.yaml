@@ -10,7 +10,7 @@ dependencies:
   process_run: '>=0.10.8'
 
 dependency_overrides:
-  pedantic: '>=1.9.0'
+  # pedantic: '>=1.9.0'
 
 dev_dependencies:
   pedantic: ^1.8.0

@@ -14,7 +14,7 @@ dependencies:
       ref: dart2
 
 dependency_overrides:
-  pedantic: '>=1.9.0'
+  # pedantic: '>=1.9.0'
 
 dev_dependencies:
   build_runner: ^1.6.0
