@@ -62,7 +62,7 @@ class _HomePageState extends State<HomePage> {
         _qrCodeData = data;
       });
     } else {
-      _scaffoldKey.currentState
+      ScaffoldMessenger.of(context)
           .showSnackBar(SnackBar(content: Text('Only supported on the web')));
     }
   }
