@@ -23,7 +23,7 @@ abstract class QrCodeOptions {
   /// The option to attemptBoth causes a ~50% performance hit
   String get inversionAttempts;
 
-  factory QrCodeOptions({String inversionAttempts}) =>
+  factory QrCodeOptions({String? inversionAttempts}) =>
       QrCodeOptionsImpl(inversionAttempts: inversionAttempts);
 }
 
@@ -54,19 +54,19 @@ abstract class QrCodePoint {
 /// QrCode result
 abstract class QrCode {
   /// The extracted text data
-  String get data;
+  String? get data;
 
   /// The qr code location.
-  QrCodeLocation get location;
+  QrCodeLocation? get location;
 }
 
 /// Attempt to decode a QR code from an image data.
 ///
 /// Returns null if non found
 QrCode decodeQrCode(
-        {@required Uint8ClampedList imageData,
-        @required int width,
-        @required int height,
-        QrCodeOptions options}) =>
+        {required Uint8ClampedList imageData,
+        required int width,
+        required int height,
+        QrCodeOptions? options}) =>
     decodeQrCodeImpl(
         imageData: imageData, width: width, height: height, options: options);

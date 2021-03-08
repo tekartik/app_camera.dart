@@ -36,5 +36,5 @@ external JsQrCode jsDecodeQrCode(
 @JS()
 abstract class JsQrCodeOptions {
   external String get inversionAttempts;
-  external factory JsQrCodeOptions({String inversionAttempts});
+  external factory JsQrCodeOptions({String? inversionAttempts});
 }

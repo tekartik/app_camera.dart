@@ -10,10 +10,10 @@ QrCodePointImpl fromJsQrCodePoint(JsQrPoint jsQrPoint) =>
     jsQrPoint == null ? null : QrCodePointImpl(jsQrPoint.x, jsQrPoint.y);
 
 QrCode decodeQrCodeImpl(
-    {@required Uint8ClampedList imageData,
-    @required int width,
-    @required int height,
-    QrCodeOptions options}) {
+    {required Uint8ClampedList imageData,
+    required int width,
+    required int height,
+    QrCodeOptions? options}) {
   options ??= QrCodeOptions();
   var jsQrCodeOptions =
       JsQrCodeOptions(inversionAttempts: options.inversionAttempts);
