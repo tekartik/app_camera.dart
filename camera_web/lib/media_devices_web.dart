@@ -28,16 +28,16 @@ class MediaDeviceInfoBrowser
   MediaDeviceInfoBrowser(this._nativeDeviceInfo);
 
   @override
-  String get deviceId => _nativeDeviceInfo.deviceId;
+  String? get deviceId => _nativeDeviceInfo.deviceId;
 
   @override
-  String get groupId => _nativeDeviceInfo.groupId;
+  String? get groupId => _nativeDeviceInfo.groupId;
 
   @override
-  String get kind => _nativeDeviceInfo.kind;
+  String? get kind => _nativeDeviceInfo.kind;
 
   @override
-  String get label => _nativeDeviceInfo.label;
+  String? get label => _nativeDeviceInfo.label;
 }
 
 @JS('mediaDevices')
@@ -49,7 +49,8 @@ class MediaDevicesBrowser implements MediaDevices {
     var jsMediaDeviceInfos =
         //await window.navigator.mediaDevices.enumerateDevices();
         await promiseToFuture(
-            js_util.callMethod(_mediaDevices, 'enumerateDevices', [])) as List;
+            js_util.callMethod(_mediaDevices, 'enumerateDevices', [])
+                as Object) as List;
     return jsMediaDeviceInfos
         .map<MediaDeviceInfo>((jsMediaDeviceInfo) =>
             MediaDeviceInfoBrowser(jsMediaDeviceInfo as js.MediaDeviceInfo))
@@ -61,27 +62,24 @@ class MediaDevicesBrowser implements MediaDevices {
     var map = {
       if (constraint.video != null)
         'video': {
-          if (constraint.video.deviceId != null)
-            'deviceId': constraint.video.deviceId,
-          if (constraint.video.facingMode != null)
-            'facingMode': constraint.video.facingMode,
+          if (constraint.video!.deviceId != null)
+            'deviceId': constraint.video!.deviceId,
+          if (constraint.video!.facingMode != null)
+            'facingMode': constraint.video!.facingMode,
         }
     };
     var nativeMediaStream =
         // await promiseToFuture(_mediaDevices.getUserMedia(js_util.jsify(map)))
-        await promiseToFuture(js_util.callMethod(
-                _mediaDevices, 'getUserMedia', [js_util.jsify(map)]))
-            as js.MediaStream;
-    if (nativeMediaStream == null) {
-      return null;
-    }
+        await promiseToFuture(js_util
+                .callMethod(_mediaDevices, 'getUserMedia', [js_util.jsify(map)])
+            as Object) as js.MediaStream;
     return MediaStreamWeb(
         nativeMediaStream); // await promiseToFuture(nativeUserMedia);
   }
 
   @override
   MediaTrackSupportedConstraints getSupportedConstraints() {
-    var nativeMap = window.navigator.mediaDevices.getSupportedConstraints();
+    var nativeMap = window.navigator.mediaDevices!.getSupportedConstraints();
     return MediaTrackSupportedConstraintsBrowser(nativeMap);
   }
 }
@@ -101,7 +99,7 @@ class MediaTrackSupportedConstraintsBrowser
   String toString() => _nativeMap.toString();
 
   @override
-  Map<String, dynamic> toDebugMap() => _nativeMap?.cast<String, dynamic>();
+  Map<String, Object?> toDebugMap() => _nativeMap.cast<String, Object?>();
 }
 
 class MediaStreamTrackWeb implements MediaStreamTrack {

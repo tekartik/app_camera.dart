@@ -1,4 +1,3 @@
-import 'package:meta/meta.dart';
 import 'package:tekartik_js_qr/js_qr.dart';
 
 export 'js_qr_impl_stub.dart' if (dart.library.html) 'js_qr_impl_web.dart';
@@ -47,10 +46,10 @@ class QrCodeLocationImpl implements QrCodeLocation {
   final QrCodePoint topRight;
 
   QrCodeLocationImpl(
-      {@required this.bottomLeft,
-      @required this.bottomRight,
-      @required this.topLeft,
-      @required this.topRight});
+      {required this.bottomLeft,
+      required this.bottomRight,
+      required this.topLeft,
+      required this.topRight});
 
   @override
   String toString() => '$topLeft $topRight $bottomRight $bottomLeft';
@@ -58,10 +57,10 @@ class QrCodeLocationImpl implements QrCodeLocation {
 
 class QrCodeImpl implements QrCode {
   @override
-  final String data;
+  final String? data;
 
   @override
-  final QrCodeLocation location;
+  final QrCodeLocation? location;
 
   QrCodeImpl({this.data, this.location});
 
@@ -73,6 +72,6 @@ class QrCodeOptionsImpl implements QrCodeOptions {
   @override
   final String inversionAttempts;
 
-  QrCodeOptionsImpl({@required String inversionAttempts})
+  QrCodeOptionsImpl({required String? inversionAttempts})
       : inversionAttempts = inversionAttempts ?? inversionAttemptDontInvert;
 }

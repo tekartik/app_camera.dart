@@ -12,9 +12,9 @@ import 'package:tekartik_qrscan_flutter_web/src/view_registry.dart';
 var mediaDevices = mediaDevicesBrowser;
 
 class ScanPage extends StatefulWidget {
-  final String title;
+  final String? title;
 
-  const ScanPage({Key key, this.title}) : super(key: key);
+  const ScanPage({Key? key, this.title}) : super(key: key);
 
   @override
   _ScanPageState createState() => _ScanPageState();
@@ -26,23 +26,22 @@ class _ScanPageState extends State<ScanPage> {
   var scaffoldKey = GlobalKey<ScaffoldState>();
 
   // Auto play needed for Chrome
-  VideoElement videoElement;
-  Widget _webcamWidget;
-  MediaStream mediaStream;
-  String viewType;
-  CanvasElement canvasElement;
-  CanvasRenderingContext2D canvas;
+  VideoElement? videoElement;
+  Widget? _webcamWidget;
+  MediaStream? mediaStream;
+  late String viewType;
+  CanvasElement? canvasElement;
+  CanvasRenderingContext2D? canvas;
   static var _id = 0;
-  double _aspectRatio;
-  Timer _timeoutTimer;
+  late double _aspectRatio;
+  Timer? _timeoutTimer;
 
   @override
   void dispose() {
-    mediaStream?.getTracks()?.forEach((element) {
+    mediaStream?.getTracks().forEach((element) {
       element.stop();
     });
     videoElement?.pause();
-    videoElement?.src = null;
     videoElement?.remove();
     _validateTimer?.cancel();
     _timeoutTimer?.cancel();
@@ -53,12 +52,12 @@ class _ScanPageState extends State<ScanPage> {
     if (canvasElement == null) {
       try {
         canvasElement = CanvasElement(
-            width: videoElement.videoWidth, height: videoElement.videoHeight);
-        canvas = canvasElement.getContext('2d') as CanvasRenderingContext2D;
+            width: videoElement!.videoWidth, height: videoElement!.videoHeight);
+        canvas = canvasElement!.getContext('2d') as CanvasRenderingContext2D?;
         registerViewFactoryWeb(viewType, (int viewId) {
-          return canvasElement;
+          return canvasElement!;
         });
-        _aspectRatio = videoElement.videoWidth / videoElement.videoHeight;
+        _aspectRatio = videoElement!.videoWidth / videoElement!.videoHeight;
         _webcamWidget = HtmlElementView(key: viewKey, viewType: viewType);
       } catch (e) {
         print('error creating html element view $e');
@@ -81,7 +80,7 @@ class _ScanPageState extends State<ScanPage> {
     videoElement = VideoElementWeb();
 
     // Needed to iOS safari
-    videoElement.allowPlayInline();
+    videoElement!.allowPlayInline();
 
     //_initCanvas();
     () async {
@@ -98,8 +97,8 @@ class _ScanPageState extends State<ScanPage> {
          */
         print('got user media');
 
-        videoElement.srcObject = stream;
-        unawaited(videoElement.play());
+        videoElement!.srcObject = stream;
+        unawaited(videoElement!.play());
         await _tick();
       } on String catch (e) {
         print('error getting user Media $e');
@@ -115,44 +114,45 @@ class _ScanPageState extends State<ScanPage> {
       if (!mounted) {
         break;
       }
-      if (videoElement.hasEnoughData) {
+      if (videoElement!.hasEnoughData) {
         _initCanvas();
-        canvasElement.height = videoElement.videoHeight;
-        canvasElement.width = videoElement.videoWidth;
-        canvas.drawImage(
+        canvasElement!.height = videoElement!.videoHeight;
+        canvasElement!.width = videoElement!.videoWidth;
+        canvas!.drawImage(
             (videoElement as VideoElementWeb).nativeVideoElement, 0, 0);
 
-        var imageData = canvas.getImageData(
-            0, 0, canvasElement.width, canvasElement.height);
-        var qrCode = decodeQrCode(
-            imageData: imageData.data,
-            width: canvasElement.width,
-            height: canvasElement.height);
-        if (qrCode != null) {
+        var imageData = canvas!
+            .getImageData(0, 0, canvasElement!.width!, canvasElement!.height!);
+        try {
+          var qrCode = decodeQrCode(
+              imageData: imageData.data,
+              width: canvasElement!.width!,
+              height: canvasElement!.height!);
+
           var color = '#FF3B58';
           void drawLine(QrCodePoint begin, QrCodePoint end) {
-            canvas.beginPath();
-            canvas.moveTo(begin.x, begin.y);
-            canvas.lineTo(end.x, end.y);
-            canvas.lineWidth = 4;
-            canvas.strokeStyle = color;
-            canvas.stroke();
+            canvas!.beginPath();
+            canvas!.moveTo(begin.x, begin.y);
+            canvas!.lineTo(end.x, end.y);
+            canvas!.lineWidth = 4;
+            canvas!.strokeStyle = color;
+            canvas!.stroke();
           }
 
-          drawLine(qrCode.location.topLeft, qrCode.location.topRight);
-          drawLine(qrCode.location.topRight, qrCode.location.bottomRight);
-          drawLine(qrCode.location.bottomRight, qrCode.location.bottomLeft);
-          drawLine(qrCode.location.bottomLeft, qrCode.location.topLeft);
+          drawLine(qrCode.location!.topLeft, qrCode.location!.topRight);
+          drawLine(qrCode.location!.topRight, qrCode.location!.bottomRight);
+          drawLine(qrCode.location!.bottomRight, qrCode.location!.bottomLeft);
+          drawLine(qrCode.location!.bottomLeft, qrCode.location!.topLeft);
           _validateQrCodeData(qrCode.data);
-        }
+        } catch (_) {}
       }
     }
   }
 
-  Timer _validateTimer;
+  Timer? _validateTimer;
 
-  String _lastQrCodeData;
-  void _validateQrCodeData(String data) {
+  String? _lastQrCodeData;
+  void _validateQrCodeData(String? data) {
     if (data != _lastQrCodeData) {
       _lastQrCodeData = data;
 
@@ -165,7 +165,7 @@ class _ScanPageState extends State<ScanPage> {
     }
   }
 
-  UniqueKey viewKey;
+  UniqueKey? viewKey;
 
   @override
   Widget build(BuildContext context) {
