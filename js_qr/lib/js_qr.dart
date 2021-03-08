@@ -1,5 +1,5 @@
 import 'dart:typed_data';
-import 'package:meta/meta.dart';
+
 import 'package:tekartik_js_qr/src/js_qr_impl.dart';
 
 /// Default for Js.

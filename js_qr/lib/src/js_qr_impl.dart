@@ -1,4 +1,3 @@
-import 'package:meta/meta.dart';
 import 'package:tekartik_js_qr/js_qr.dart';
 
 export 'js_qr_impl_stub.dart' if (dart.library.html) 'js_qr_impl_web.dart';

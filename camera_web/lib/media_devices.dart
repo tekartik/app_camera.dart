@@ -3,14 +3,14 @@ const String mediaDeviceInfoKindVideo = 'videoinput';
 const String mediaVideoConstraintFacingModeEnvironment = 'environment';
 
 class GetUserMediaVideoConstraint {
-  final String deviceId;
-  final String facingMode;
+  final String? deviceId;
+  final String? facingMode;
 
   GetUserMediaVideoConstraint({this.deviceId, this.facingMode});
 }
 
 class GetUserMediaConstraint {
-  final GetUserMediaVideoConstraint video;
+  final GetUserMediaVideoConstraint? video;
 
   GetUserMediaConstraint({this.video});
 }
@@ -32,18 +32,18 @@ abstract class MediaDeviceInfo {
   /// It is un-guessable by other applications and unique to the origin
   /// of the calling application. It is reset when the user clears cookies
   /// (for Private Browsing, a different identifier is used that is not persisted across sessions).
-  String get deviceId;
+  String? get deviceId;
 
   /// Ggroup identifier. Two devices have the same group identifier
   /// if they belong to the same physical device — for example a monitor
   /// with both a built-in camera and a microphone.
-  String get groupId;
+  String? get groupId;
 
   ///  enumerated value that is either "videoinput", "audioinput" or "audiooutput".
-  String get kind;
+  String? get kind;
 
   /// label describing this device (for example "External USB Webcam").
-  String get label;
+  String? get label;
 
   /// Debug map
   Map<String, dynamic> toDebugMap();

@@ -3,7 +3,7 @@ import 'package:tekartik_browser_utils/browser_utils_import.dart';
 import 'package:tekartik_camera_web/media_devices.dart';
 import 'package:tekartik_camera_web/media_devices_web.dart';
 
-String _existing;
+String? _existing;
 
 void write(Object msg) {
   var text = msg.toString();
@@ -13,7 +13,7 @@ void write(Object msg) {
   } else {
     _existing = [_existing, text].join('\n');
   }
-  querySelector('#output').text = _existing;
+  querySelector('#output')!.text = _existing;
 }
 
 var mediaDevices = mediaDevicesBrowser;
@@ -21,7 +21,7 @@ var mediaDevices = mediaDevicesBrowser;
 Future main() async {
   write('Running video 2');
 
-  var video = document.querySelector('#videoElement') as VideoElement;
+  var video = document.querySelector('#videoElement') as VideoElement?;
 
   var constraints = mediaDevices.getSupportedConstraints();
   write(constraints);
@@ -29,7 +29,7 @@ Future main() async {
     var devices = await mediaDevices.enumerateDevices();
     write('got devices');
     write('devices: $devices');
-    MediaDeviceInfo deviceInfo;
+    late MediaDeviceInfo deviceInfo;
     for (var device in devices) {
       // Find first device
       write('device kind: ${device.kind}');
@@ -43,7 +43,7 @@ Future main() async {
     var stream = await mediaDevices.getUserMedia(GetUserMediaConstraint(
         video: GetUserMediaVideoConstraint(deviceId: deviceInfo.deviceId)));
     write('got stream');
-    video.srcObject = (stream as MediaStreamWeb).htmlMediaStream;
+    video!.srcObject = (stream as MediaStreamWeb).htmlMediaStream;
   } on String catch (e) {
     write('error enumerating devices $e');
   }
