@@ -123,26 +123,28 @@ class _ScanPageState extends State<ScanPage> {
 
         var imageData = canvas!
             .getImageData(0, 0, canvasElement!.width!, canvasElement!.height!);
-        var qrCode = decodeQrCode(
-            imageData: imageData.data,
-            width: canvasElement!.width!,
-            height: canvasElement!.height!);
+        try {
+          var qrCode = decodeQrCode(
+              imageData: imageData.data,
+              width: canvasElement!.width!,
+              height: canvasElement!.height!);
 
-        var color = '#FF3B58';
-        void drawLine(QrCodePoint begin, QrCodePoint end) {
-          canvas!.beginPath();
-          canvas!.moveTo(begin.x, begin.y);
-          canvas!.lineTo(end.x, end.y);
-          canvas!.lineWidth = 4;
-          canvas!.strokeStyle = color;
-          canvas!.stroke();
-        }
+          var color = '#FF3B58';
+          void drawLine(QrCodePoint begin, QrCodePoint end) {
+            canvas!.beginPath();
+            canvas!.moveTo(begin.x, begin.y);
+            canvas!.lineTo(end.x, end.y);
+            canvas!.lineWidth = 4;
+            canvas!.strokeStyle = color;
+            canvas!.stroke();
+          }
 
-        drawLine(qrCode.location!.topLeft, qrCode.location!.topRight);
-        drawLine(qrCode.location!.topRight, qrCode.location!.bottomRight);
-        drawLine(qrCode.location!.bottomRight, qrCode.location!.bottomLeft);
-        drawLine(qrCode.location!.bottomLeft, qrCode.location!.topLeft);
-        _validateQrCodeData(qrCode.data);
+          drawLine(qrCode.location!.topLeft, qrCode.location!.topRight);
+          drawLine(qrCode.location!.topRight, qrCode.location!.bottomRight);
+          drawLine(qrCode.location!.bottomRight, qrCode.location!.bottomLeft);
+          drawLine(qrCode.location!.bottomLeft, qrCode.location!.topLeft);
+          _validateQrCodeData(qrCode.data);
+        } catch (_) {}
       }
     }
   }
