@@ -99,7 +99,7 @@ class MediaTrackSupportedConstraintsBrowser
   String toString() => _nativeMap.toString();
 
   @override
-  Map<String, dynamic> toDebugMap() => _nativeMap.cast<String, dynamic>();
+  Map<String, Object?> toDebugMap() => _nativeMap.cast<String, Object?>();
 }
 
 class MediaStreamTrackWeb implements MediaStreamTrack {

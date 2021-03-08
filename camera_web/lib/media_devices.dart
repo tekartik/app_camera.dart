@@ -23,7 +23,7 @@ abstract class MediaTrackSupportedConstraints {
   bool get facingMode;
 
   /// Debug map
-  Map<String, dynamic> toDebugMap();
+  Map<String, Object?> toDebugMap();
 }
 
 /// contains information that describes a single media input or output device.
@@ -46,7 +46,7 @@ abstract class MediaDeviceInfo {
   String? get label;
 
   /// Debug map
-  Map<String, dynamic> toDebugMap();
+  Map<String, Object?> toDebugMap();
 }
 
 mixin MediaDeviceInfoMixin implements MediaDeviceInfo {
@@ -54,8 +54,8 @@ mixin MediaDeviceInfoMixin implements MediaDeviceInfo {
   String toString() => toDebugMap().toString();
 
   @override
-  Map<String, dynamic> toDebugMap() {
-    return <String, dynamic>{
+  Map<String, Object?> toDebugMap() {
+    return <String, Object?>{
       if (deviceId != null) 'deviceId': deviceId,
       if (groupId != null) 'groupId': groupId,
       if (kind != null) 'kind': kind,

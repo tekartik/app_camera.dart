@@ -10,6 +10,6 @@ dependencies:
     git:
       url: git://github.com/tekartik/app_camera.dart
       path: camera_web
-      ref: dart2
+      ref: null_safety
     version: '>=0.1.0'
 ```
