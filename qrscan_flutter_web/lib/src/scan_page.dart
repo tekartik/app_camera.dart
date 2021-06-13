@@ -1,7 +1,8 @@
 import 'dart:async';
 import 'dart:html' hide VideoElement, MediaDevices;
-import 'package:pedantic/pedantic.dart';
+
 import 'package:flutter/material.dart';
+import 'package:pedantic/pedantic.dart';
 import 'package:tekartik_camera_web/media_devices.dart';
 import 'package:tekartik_camera_web/media_devices_web.dart';
 import 'package:tekartik_camera_web/video_element.dart';
@@ -152,6 +153,7 @@ class _ScanPageState extends State<ScanPage> {
   Timer? _validateTimer;
 
   String? _lastQrCodeData;
+
   void _validateQrCodeData(String? data) {
     if (data != _lastQrCodeData) {
       _lastQrCodeData = data;
