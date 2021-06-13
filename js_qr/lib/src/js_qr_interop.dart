@@ -9,6 +9,7 @@ import 'package:js/js.dart';
 @anonymous
 class JsQrCode {
   external String get data;
+
   external JsQrCodeLocation get location;
 }
 
@@ -16,6 +17,7 @@ class JsQrCode {
 @anonymous
 class JsQrPoint {
   external num get x;
+
   external num get y;
 }
 
@@ -23,8 +25,11 @@ class JsQrPoint {
 @anonymous
 class JsQrCodeLocation {
   external JsQrPoint get topRightCorner;
+
   external JsQrPoint get topLeftCorner;
+
   external JsQrPoint get bottomRightCorner;
+
   external JsQrPoint get bottomLeftCorner;
 }
 
@@ -36,5 +41,6 @@ external JsQrCode jsDecodeQrCode(
 @JS()
 abstract class JsQrCodeOptions {
   external String get inversionAttempts;
+
   external factory JsQrCodeOptions({String? inversionAttempts});
 }

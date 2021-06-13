@@ -6,6 +6,7 @@ import 'package:tekartik_camera_web/video_element.dart';
 
 class VideoElementWeb implements VideoElement {
   late html.VideoElement _nativeVideoElement;
+
   html.VideoElement get nativeVideoElement => _nativeVideoElement;
 
   VideoElementWeb() {

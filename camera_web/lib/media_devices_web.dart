@@ -106,6 +106,7 @@ class MediaStreamTrackWeb implements MediaStreamTrack {
   final js.MediaStreamTrack _native;
 
   MediaStreamTrackWeb(this._native);
+
   @override
   void stop() {
     _native.stop();
