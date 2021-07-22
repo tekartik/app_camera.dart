@@ -173,9 +173,6 @@ class _ScanPageState extends State<ScanPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       key: scaffoldKey,
-      appBar: AppBar(
-        title: Text(widget.title ?? 'Scan QR code'),
-      ),
       body: Column(children: [
         Expanded(
             child: Row(
