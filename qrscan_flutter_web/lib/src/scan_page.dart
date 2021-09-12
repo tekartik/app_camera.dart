@@ -1,5 +1,10 @@
+// ignore_for_file: prefer_const_constructors
+
 import 'dart:async';
-import 'dart:html' hide VideoElement, MediaDevices;
+import 'dart:html' // ignore: avoid_web_libraries_in_flutter
+    hide
+        VideoElement,
+        MediaDevices;
 
 import 'package:flutter/material.dart';
 import 'package:pedantic/pedantic.dart';
@@ -61,7 +66,7 @@ class _ScanPageState extends State<ScanPage> {
         _aspectRatio = videoElement!.videoWidth / videoElement!.videoHeight;
         _webcamWidget = HtmlElementView(key: viewKey, viewType: viewType);
       } catch (e) {
-        print('error creating html element view $e');
+        // print('error creating html element view $e');
       }
       // refresh the UI
       setState(() {});
@@ -86,7 +91,7 @@ class _ScanPageState extends State<ScanPage> {
     //_initCanvas();
     () async {
       try {
-        print('getting user media');
+        // print('getting user media');
         var stream = mediaStream = await mediaDevices.getUserMedia(
             GetUserMediaConstraint(
                 video: GetUserMediaVideoConstraint(
@@ -96,13 +101,13 @@ class _ScanPageState extends State<ScanPage> {
             video: GetUserMediaVideoConstraint(deviceId: deviceInfo.deviceId)));
 
          */
-        print('got user media');
+        // print('got user media');
 
         videoElement!.srcObject = stream;
         unawaited(videoElement!.play());
         await _tick();
       } on String catch (e) {
-        print('error getting user Media $e');
+        // print('error getting user Media $e');
         ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(content: Text('error getting user Media $e')));
       }

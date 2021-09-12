@@ -16,13 +16,13 @@ Future main(List<String> arguments) async {
     print(parser.usage);
     exit(0);
   }
-  var parallel = results['parallel'] as bool;
+  var parallel = results['parallel'] as bool?;
 
   var shell = Shell().pushd(topDir);
 
   Future execute(Future Function() operation) async {
     var future = operation();
-    if (parallel) {
+    if (parallel!) {
       return Future.value();
     } else {
       return future;
