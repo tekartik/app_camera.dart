@@ -61,7 +61,7 @@ class _HomePageState extends State<HomePage> {
 
   Future _scanQrCode() async {
     if (kIsWeb) {
-      var data = await scanQrCode(context);
+      var data = await scanQrCode(context, title: 'test');
       setState(() {
         _qrCodeData = data;
       });

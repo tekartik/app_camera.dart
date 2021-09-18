@@ -20,6 +20,7 @@ var mediaDevices = mediaDevicesBrowser;
 class ScanPage extends StatefulWidget {
   final String? title;
 
+  /// If [title] is not specified no app bar is displayed
   const ScanPage({Key? key, this.title}) : super(key: key);
 
   @override
@@ -178,6 +179,7 @@ class _ScanPageState extends State<ScanPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       key: scaffoldKey,
+      appBar: widget.title != null ? AppBar(title: Text(widget.title!)) : null,
       body: Column(children: [
         Expanded(
             child: Row(
