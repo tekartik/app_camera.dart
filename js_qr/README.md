@@ -8,8 +8,8 @@ In `pubspec.yaml`
 dependencies:
   tekartik_js_qr:
     git:
-      url: git://github.com/tekartik/app_camera.dart
+      url: https://github.com/tekartik/app_camera.dart
       path: js_qr
-      ref: null_safety
+      ref: dart2_3
     version: '>=0.1.0'
 ```
