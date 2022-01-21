@@ -3,7 +3,6 @@ library tekartik_media_devices_js;
 
 import 'dart:html' as js;
 
-import 'package:js/js.dart';
 import 'package:js/js_util.dart' as js_util;
 import 'package:tekartik_browser_utils/browser_utils_import.dart';
 import 'package:tekartik_camera_web/media_devices.dart';
