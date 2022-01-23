@@ -10,8 +10,8 @@ dependencies:
   js:
   tekartik_browser_utils:
     git:
-      url: git://github.com/tekartik/browser_utils.dart
-      ref: null_safety
+      url: https://github.com/tekartik/browser_utils.dart
+      ref: dart2_3
 
 dependency_overrides:
   # pedantic: '>=1.9.0'

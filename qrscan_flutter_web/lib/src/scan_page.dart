@@ -7,7 +7,6 @@ import 'dart:html' // ignore: avoid_web_libraries_in_flutter
         MediaDevices;
 
 import 'package:flutter/material.dart';
-import 'package:pedantic/pedantic.dart';
 import 'package:tekartik_camera_web/media_devices.dart';
 import 'package:tekartik_camera_web/media_devices_web.dart';
 import 'package:tekartik_camera_web/video_element.dart';
