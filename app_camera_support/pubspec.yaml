@@ -25,3 +25,5 @@ dev_dependencies:
     git:
       url: https://github.com/tekartik/common_utils.dart
       ref: dart2_3
+  args:
+  path:
