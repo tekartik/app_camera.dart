@@ -23,6 +23,7 @@ class ScanPage extends StatefulWidget {
   const ScanPage({Key? key, this.title}) : super(key: key);
 
   @override
+  // ignore: library_private_types_in_public_api
   _ScanPageState createState() => _ScanPageState();
 }
 
