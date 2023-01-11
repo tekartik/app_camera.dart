@@ -47,7 +47,7 @@ class MediaDevicesBrowser implements MediaDevices {
   Future<List<MediaDeviceInfo>> enumerateDevices() async {
     var jsMediaDeviceInfos =
         //await window.navigator.mediaDevices.enumerateDevices();
-        await promiseToFuture(
+        await promiseToFuture<Object?>(
             js_util.callMethod(_mediaDevices, 'enumerateDevices', [])
                 as Object) as List;
     return jsMediaDeviceInfos
@@ -69,7 +69,7 @@ class MediaDevicesBrowser implements MediaDevices {
     };
     var nativeMediaStream =
         // await promiseToFuture(_mediaDevices.getUserMedia(js_util.jsify(map)))
-        await promiseToFuture(js_util
+        await promiseToFuture<Object?>(js_util
                 .callMethod(_mediaDevices, 'getUserMedia', [js_util.jsify(map)])
             as Object) as js.MediaStream;
     return MediaStreamWeb(

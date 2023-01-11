@@ -1,2 +1,2 @@
 # tekartik recommended lints (extension over google lints and pedantic)
-include: package:tekartik_common_utils/lints/recommended.yaml
+include: package:tekartik_lints/strict.yaml
