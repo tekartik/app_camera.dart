@@ -1,6 +1,6 @@
 # tekartik flutter recommended lints (extension over google lints and pedantic)
-include: package:tekartik_app_lints_flutter/recommended.yaml
+include: package:tekartik_lints_flutter/strict.yaml
 
 analyzer:
   exclude:
-    - lib/src/view_registry.dart
+  #  - lib/src/view_registry.dart
