@@ -8,7 +8,7 @@ Future main() async {
   print('http://localhost:8061/raw/index.html');
   await shell.run('''
   
-  pub global run webdev serve example:8061 --auto=refresh
+  dart pub global run webdev serve example:8061 --auto=refresh
   
   ''');
 }
