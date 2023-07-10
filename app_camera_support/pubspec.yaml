@@ -4,7 +4,7 @@ version: 0.1.0
 publish_to: none
 
 environment:
-  sdk: '>=2.18.0 <3.0.0'
+  sdk: '>=3.0.0 <4.0.0'
 
 dependencies:
   process_run: '>=0.10.8'
@@ -12,14 +12,9 @@ dependencies:
 dev_dependencies:
   test: ^1.6.0
   dev_test: '>=0.13.4+4'
-  tekartik_travis_ci_flutter:
-    git:
-      url: https://github.com/tekartik/travis_ci_flutter.dart
-      ref: dart2_3
-    version: '>=0.1.0'
   tekartik_common_utils:
     git:
       url: https://github.com/tekartik/common_utils.dart
-      ref: dart2_3
+      ref: dart3a
   args:
   path:
