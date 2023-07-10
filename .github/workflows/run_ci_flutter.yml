@@ -18,9 +18,10 @@ jobs:
         os: [ubuntu-latest, windows-latest, macos-latest]
         flutter: [stable, beta]
     steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-java@v1
+      - uses: actions/checkout@v3
+      - uses: actions/setup-java@v3
         with:
+          distribution: 'zulu'
           java-version: '12.x'
       - uses: subosito/flutter-action@v2
         with:
@@ -29,4 +30,4 @@ jobs:
       - run: flutter --version
       - run: flutter upgrade
       - run: dart pub get
-      - run: dart run tool/basic_run_ci.dart
+      - run: dart run tool/basic_run_ci_flutter.dart
