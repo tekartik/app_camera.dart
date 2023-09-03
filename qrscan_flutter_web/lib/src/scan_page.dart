@@ -109,8 +109,10 @@ class _ScanPageState extends State<ScanPage> {
         await _tick();
       } on String catch (e) {
         // print('error getting user Media $e');
-        ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text('error getting user Media $e')));
+        if (context.mounted) {
+          ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(content: Text('error getting user Media $e')));
+        }
       }
     }();
   }
