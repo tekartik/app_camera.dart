@@ -20,7 +20,7 @@ class ScanPage extends StatefulWidget {
   final String? title;
 
   /// If [title] is not specified no app bar is displayed
-  const ScanPage({Key? key, this.title}) : super(key: key);
+  const ScanPage({super.key, this.title});
 
   @override
   // ignore: library_private_types_in_public_api
