@@ -1,8 +1,7 @@
-import 'dart:html';
-
 import 'package:tekartik_browser_utils/browser_utils_import.dart';
 import 'package:tekartik_camera_web/media_devices.dart';
 import 'package:tekartik_camera_web/media_devices_web.dart';
+import 'package:web/web.dart' as web;
 
 String? _existing;
 
@@ -14,7 +13,7 @@ void write(Object msg) {
   } else {
     _existing = [_existing, text].join('\n');
   }
-  querySelector('#output')!.text = _existing;
+  web.document.querySelector('#output')!.text = _existing!;
 }
 
 var mediaDevices = mediaDevicesBrowser;
@@ -22,7 +21,8 @@ var mediaDevices = mediaDevicesBrowser;
 Future main() async {
   write('Running video 2');
 
-  var video = document.querySelector('#videoElement') as VideoElement?;
+  var video =
+      web.document.querySelector('#videoElement') as web.HTMLVideoElement?;
 
   var constraints = mediaDevices.getSupportedConstraints();
   write(constraints);

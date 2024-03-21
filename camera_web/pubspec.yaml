@@ -7,7 +7,6 @@ environment:
   sdk: '>=3.3.0 <4.0.0'
 
 dependencies:
-  js:
   tekartik_browser_utils:
     git:
       url: https://github.com/tekartik/browser_utils.dart

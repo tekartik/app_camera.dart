@@ -1,3 +1,4 @@
+import 'dart:js_interop';
 import 'dart:typed_data';
 
 import 'package:tekartik_js_qr/js_qr.dart';
@@ -16,7 +17,7 @@ QrCode decodeQrCodeImpl(
   options ??= QrCodeOptions();
   var jsQrCodeOptions =
       JsQrCodeOptions(inversionAttempts: options.inversionAttempts);
-  var jsQrCode = jsDecodeQrCode(imageData, width, height, jsQrCodeOptions);
+  var jsQrCode = jsDecodeQrCode(imageData.toJS, width, height, jsQrCodeOptions);
 
   return QrCodeImpl(
       data: jsQrCode.data,

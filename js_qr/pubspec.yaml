@@ -8,7 +8,6 @@ environment:
 
 dependencies:
   meta:
-  js:
   tekartik_browser_utils:
     git:
       url: https://github.com/tekartik/browser_utils.dart

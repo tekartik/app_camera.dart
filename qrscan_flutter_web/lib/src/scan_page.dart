@@ -1,10 +1,8 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'dart:async';
-import 'dart:html' // ignore: avoid_web_libraries_in_flutter
-    hide
-        VideoElement,
-        MediaDevices;
+
+import 'dart:js_interop';
 
 import 'package:flutter/material.dart';
 import 'package:tekartik_camera_web/media_devices.dart';
@@ -13,6 +11,7 @@ import 'package:tekartik_camera_web/video_element.dart';
 import 'package:tekartik_camera_web/video_element_web.dart';
 import 'package:tekartik_js_qr/js_qr.dart';
 import 'package:tekartik_qrscan_flutter_web/src/view_registry.dart';
+import 'package:web/web.dart' as web;
 
 var mediaDevices = mediaDevicesBrowser;
 
@@ -37,8 +36,8 @@ class _ScanPageState extends State<ScanPage> {
   Widget? _webcamWidget;
   MediaStream? mediaStream;
   late String viewType;
-  CanvasElement? canvasElement;
-  CanvasRenderingContext2D? canvas;
+  web.HTMLCanvasElement? canvasElement;
+  web.CanvasRenderingContext2D? canvas;
   static var _id = 0;
   late double _aspectRatio;
   Timer? _timeoutTimer;
@@ -58,9 +57,10 @@ class _ScanPageState extends State<ScanPage> {
   void _initCanvas() {
     if (canvasElement == null) {
       try {
-        canvasElement = CanvasElement(
-            width: videoElement!.videoWidth, height: videoElement!.videoHeight);
-        canvas = canvasElement!.getContext('2d') as CanvasRenderingContext2D?;
+        canvasElement = web.HTMLCanvasElement()
+          ..width = videoElement!.videoWidth
+          ..height = videoElement!.videoHeight;
+        canvas = canvasElement!.context2D;
         registerViewFactoryWeb(viewType, (int viewId) {
           return canvasElement!;
         });
@@ -117,9 +117,17 @@ class _ScanPageState extends State<ScanPage> {
     }();
   }
 
+  Future<void> get animationFrame {
+    var completer = Completer<void>.sync();
+    web.window.requestAnimationFrame((JSAny time) {
+      completer.complete();
+    }.toJS);
+    return completer.future;
+  }
+
   Future _tick() async {
     while (true) {
-      await window.animationFrame;
+      await animationFrame;
       if (!mounted) {
         break;
       }
@@ -131,12 +139,12 @@ class _ScanPageState extends State<ScanPage> {
             (videoElement as VideoElementWeb).nativeVideoElement, 0, 0);
 
         var imageData = canvas!
-            .getImageData(0, 0, canvasElement!.width!, canvasElement!.height!);
+            .getImageData(0, 0, canvasElement!.width, canvasElement!.height);
         try {
           var qrCode = decodeQrCode(
-              imageData: imageData.data,
-              width: canvasElement!.width!,
-              height: canvasElement!.height!);
+              imageData: imageData.data.toDart,
+              width: canvasElement!.width,
+              height: canvasElement!.height);
 
           var color = '#FF3B58';
           void drawLine(QrCodePoint begin, QrCodePoint end) {
@@ -144,7 +152,7 @@ class _ScanPageState extends State<ScanPage> {
             canvas!.moveTo(begin.x, begin.y);
             canvas!.lineTo(end.x, end.y);
             canvas!.lineWidth = 4;
-            canvas!.strokeStyle = color;
+            canvas!.strokeStyle = color.toJS;
             canvas!.stroke();
           }
 
