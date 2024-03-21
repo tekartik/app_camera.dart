@@ -47,7 +47,7 @@ class MediaDevicesBrowser implements MediaDevices {
   Future<List<MediaDeviceInfo>> enumerateDevices() async {
     var jsMediaDeviceInfos =
         //await window.navigator.mediaDevices.enumerateDevices();
-        await promiseToFuture<Object?>(
+        await js.promiseToFuture<Object?>(
             js_util.callMethod(_mediaDevices, 'enumerateDevices', [])
                 as Object) as List;
     return jsMediaDeviceInfos
@@ -69,7 +69,7 @@ class MediaDevicesBrowser implements MediaDevices {
     };
     var nativeMediaStream =
         // await promiseToFuture(_mediaDevices.getUserMedia(js_util.jsify(map)))
-        await promiseToFuture<Object?>(js_util
+        await js.promiseToFuture<Object?>(js_util
                 .callMethod(_mediaDevices, 'getUserMedia', [js_util.jsify(map)])
             as Object) as js.MediaStream;
     return MediaStreamWeb(
@@ -78,7 +78,7 @@ class MediaDevicesBrowser implements MediaDevices {
 
   @override
   MediaTrackSupportedConstraints getSupportedConstraints() {
-    var nativeMap = window.navigator.mediaDevices!.getSupportedConstraints();
+    var nativeMap = js.window.navigator.mediaDevices!.getSupportedConstraints();
     return MediaTrackSupportedConstraintsBrowser(nativeMap);
   }
 }
