@@ -1,16 +1,17 @@
-import 'dart:html' as html;
+import 'dart:js_interop';
 
 import 'package:tekartik_camera_web/media_devices.dart';
 import 'package:tekartik_camera_web/media_devices_web.dart';
 import 'package:tekartik_camera_web/video_element.dart';
+import 'package:web/web.dart' as web;
 
 class VideoElementWeb implements VideoElement {
-  late html.VideoElement _nativeVideoElement;
+  late web.HTMLVideoElement _nativeVideoElement;
 
-  html.VideoElement get nativeVideoElement => _nativeVideoElement;
+  web.HTMLVideoElement get nativeVideoElement => _nativeVideoElement;
 
   VideoElementWeb() {
-    _nativeVideoElement = html.VideoElement();
+    _nativeVideoElement = web.HTMLVideoElement();
   }
 
   @override
@@ -34,12 +35,12 @@ class VideoElementWeb implements VideoElement {
 
   @override
   void allowPlayInline() {
-    _nativeVideoElement.attributes['playsinline'] = 'true';
+    _nativeVideoElement.playsInline = true;
   }
 
   @override
   Future play() {
-    return _nativeVideoElement.play();
+    return _nativeVideoElement.play().toDart;
   }
 
   @override
@@ -57,5 +58,5 @@ class VideoElementWeb implements VideoElement {
 
   @override
   bool get hasEnoughData =>
-      _nativeVideoElement.readyState == html.MediaElement.HAVE_ENOUGH_DATA;
+      _nativeVideoElement.readyState == web.HTMLMediaElement.HAVE_ENOUGH_DATA;
 }

@@ -1,28 +1,13 @@
-@JS('window.navigator')
-library tekartik_media_devices_js;
+import 'dart:js_interop';
 
-import 'dart:html' as js;
-
-import 'package:js/js_util.dart' as js_util;
 import 'package:tekartik_browser_utils/browser_utils_import.dart';
 import 'package:tekartik_camera_web/media_devices.dart';
-
-@JS()
-@anonymous
-class _MediaDevices {
-  external bool get responsive;
-
-  /// Promise<List<MediaDeviceInfo>>
-  external dynamic enumerateDevices();
-
-  /// Promise<List<MediaDeviceInfo>>
-  external dynamic getUserMedia(dynamic constraint);
-}
+import 'package:web/web.dart' as web;
 
 class MediaDeviceInfoBrowser
     with MediaDeviceInfoMixin
     implements MediaDeviceInfo {
-  final js.MediaDeviceInfo _nativeDeviceInfo;
+  final web.MediaDeviceInfo _nativeDeviceInfo;
 
   MediaDeviceInfoBrowser(this._nativeDeviceInfo);
 
@@ -39,47 +24,44 @@ class MediaDeviceInfoBrowser
   String? get label => _nativeDeviceInfo.label;
 }
 
-@JS('mediaDevices')
-external _MediaDevices get _mediaDevices;
-
 class MediaDevicesBrowser implements MediaDevices {
   @override
   Future<List<MediaDeviceInfo>> enumerateDevices() async {
     var jsMediaDeviceInfos =
-        //await window.navigator.mediaDevices.enumerateDevices();
-        await promiseToFuture<Object?>(
-            js_util.callMethod(_mediaDevices, 'enumerateDevices', [])
-                as Object) as List;
+        (await web.window.navigator.mediaDevices.enumerateDevices().toDart)
+            .toDart;
+
     return jsMediaDeviceInfos
-        .map<MediaDeviceInfo>((jsMediaDeviceInfo) =>
-            MediaDeviceInfoBrowser(jsMediaDeviceInfo as js.MediaDeviceInfo))
+        .map<MediaDeviceInfo>(
+            (jsMediaDeviceInfo) => MediaDeviceInfoBrowser(jsMediaDeviceInfo))
         .toList(growable: false);
   }
 
   @override
   Future<MediaStream> getUserMedia(GetUserMediaConstraint constraint) async {
-    var map = {
-      if (constraint.video != null)
-        'video': {
-          if (constraint.video!.deviceId != null)
-            'deviceId': constraint.video!.deviceId,
-          if (constraint.video!.facingMode != null)
-            'facingMode': constraint.video!.facingMode,
-        }
-    };
-    var nativeMediaStream =
-        // await promiseToFuture(_mediaDevices.getUserMedia(js_util.jsify(map)))
-        await promiseToFuture<Object?>(js_util
-                .callMethod(_mediaDevices, 'getUserMedia', [js_util.jsify(map)])
-            as Object) as js.MediaStream;
+    var webConstraints = web.MediaStreamConstraints();
+    var trackConstraints = web.MediaTrackConstraints();
+    webConstraints.video = web.MediaTrackConstraints();
+    if (constraint.video!.deviceId != null) {
+      trackConstraints.deviceId = constraint.video!.deviceId!.toJS;
+    }
+    if (constraint.video!.facingMode != null) {
+      trackConstraints.facingMode = constraint.video!.facingMode!.toJS;
+    }
+
+    var webMediaStream = await web.window.navigator.mediaDevices
+        .getUserMedia(webConstraints)
+        .toDart;
+
     return MediaStreamWeb(
-        nativeMediaStream); // await promiseToFuture(nativeUserMedia);
+        webMediaStream); // await promiseToFuture(nativeUserMedia);
   }
 
   @override
   MediaTrackSupportedConstraints getSupportedConstraints() {
-    var nativeMap = window.navigator.mediaDevices!.getSupportedConstraints();
-    return MediaTrackSupportedConstraintsBrowser(nativeMap);
+    var webSupportedConstraints =
+        web.window.navigator.mediaDevices.getSupportedConstraints();
+    return MediaTrackSupportedConstraintsBrowser(webSupportedConstraints);
   }
 }
 
@@ -87,22 +69,23 @@ final mediaDevicesBrowser = MediaDevicesBrowser();
 
 class MediaTrackSupportedConstraintsBrowser
     implements MediaTrackSupportedConstraints {
-  final Map _nativeMap;
+  final web.MediaTrackSupportedConstraints _nativeMap;
 
   MediaTrackSupportedConstraintsBrowser(this._nativeMap);
 
   @override
-  bool get facingMode => _nativeMap['facingMode'] == true;
+  bool get facingMode => _nativeMap.facingMode;
 
   @override
-  String toString() => _nativeMap.toString();
+  String toString() => 'facingMode: $facingMode';
 
   @override
-  Map<String, Object?> toDebugMap() => _nativeMap.cast<String, Object?>();
+  Map<String, Object?> toDebugMap() =>
+      (_nativeMap.dartify() as Map).cast<String, Object?>();
 }
 
 class MediaStreamTrackWeb implements MediaStreamTrack {
-  final js.MediaStreamTrack _native;
+  final web.MediaStreamTrack _native;
 
   MediaStreamTrackWeb(this._native);
 
@@ -113,16 +96,16 @@ class MediaStreamTrackWeb implements MediaStreamTrack {
 }
 
 class MediaStreamWeb implements MediaStream {
-  final js.MediaStream nativeMediaStream;
+  final web.MediaStream nativeMediaStream;
 
-  js.MediaStream get htmlMediaStream => nativeMediaStream;
+  web.MediaStream get htmlMediaStream => nativeMediaStream;
 
   MediaStreamWeb(this.nativeMediaStream);
 
   @override
   List<MediaStreamTrack> getTracks() {
     var jsTracks = nativeMediaStream.getTracks();
-    return jsTracks
+    return jsTracks.toDart
         .map((jsTrack) => MediaStreamTrackWeb(jsTrack))
         .toList(growable: false);
   }

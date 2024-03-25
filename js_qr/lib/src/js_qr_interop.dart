@@ -1,29 +1,20 @@
-@JS()
 library tekartik_js_qr_interop;
 
-import 'dart:typed_data';
+import 'dart:js_interop' as js;
 
-import 'package:js/js.dart';
-
-@JS()
-@anonymous
-class JsQrCode {
+extension type JsQrCode._(js.JSObject _) implements js.JSObject {
   external String get data;
 
   external JsQrCodeLocation get location;
 }
 
-@JS()
-@anonymous
-class JsQrPoint {
+extension type JsQrPoint._(js.JSObject _) implements js.JSObject {
   external num get x;
 
   external num get y;
 }
 
-@JS()
-@anonymous
-class JsQrCodeLocation {
+extension type JsQrCodeLocation._(js.JSObject _) implements js.JSObject {
   external JsQrPoint get topRightCorner;
 
   external JsQrPoint get topLeftCorner;
@@ -33,13 +24,11 @@ class JsQrCodeLocation {
   external JsQrPoint get bottomLeftCorner;
 }
 
-@JS('jsQR')
-external JsQrCode jsDecodeQrCode(
-    Uint8ClampedList imageData, int width, int height, JsQrCodeOptions options);
+@js.JS('jsQR')
+external JsQrCode jsDecodeQrCode(js.JSUint8ClampedArray imageData, int width,
+    int height, JsQrCodeOptions options);
 
-@anonymous
-@JS()
-abstract class JsQrCodeOptions {
+extension type JsQrCodeOptions._(js.JSObject _) implements js.JSObject {
   external String get inversionAttempts;
 
   external factory JsQrCodeOptions({String? inversionAttempts});
