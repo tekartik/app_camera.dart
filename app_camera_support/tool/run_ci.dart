@@ -1,7 +1,7 @@
 import 'dart:io';
 
 import 'package:args/args.dart';
-import 'package:dev_test/package.dart';
+import 'package:dev_build/package.dart';
 import 'package:path/path.dart';
 import 'package:process_run/shell.dart';
 
