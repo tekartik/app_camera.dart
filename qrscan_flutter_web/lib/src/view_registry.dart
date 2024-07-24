@@ -1,5 +1,5 @@
 import 'package:web/web.dart' as web;
-import 'dart:ui' as ui;
+import 'dart:ui_web' as ui;
 
 void registerViewFactoryWeb(
         String viewType, web.Element Function(int viewId) factory) =>
