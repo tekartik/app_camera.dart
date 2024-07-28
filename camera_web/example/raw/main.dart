@@ -30,7 +30,7 @@ Future main() async {
     var devices = await mediaDevices.enumerateDevices();
     write('got devices');
     write('devices: $devices');
-    late MediaDeviceInfo deviceInfo;
+    MediaDeviceInfo? deviceInfo;
     for (var device in devices) {
       // Find first device
       write('device kind: ${device.kind}');
@@ -40,11 +40,16 @@ Future main() async {
       }
     }
 
-    write('getting stream deviceId ${deviceInfo.deviceId}');
-    var stream = await mediaDevices.getUserMedia(GetUserMediaConstraint(
-        video: GetUserMediaVideoConstraint(deviceId: deviceInfo.deviceId)));
-    write('got stream');
-    video!.srcObject = (stream as MediaStreamWeb).htmlMediaStream;
+    if (deviceInfo == null) {
+      write('no video device found');
+      return;
+    } else {
+      write('getting stream deviceId ${deviceInfo.deviceId}');
+      var stream = await mediaDevices.getUserMedia(GetUserMediaConstraint(
+          video: GetUserMediaVideoConstraint(deviceId: deviceInfo.deviceId)));
+      write('got stream');
+      video!.srcObject = (stream as MediaStreamWeb).htmlMediaStream;
+    }
   } on String catch (e) {
     write('error enumerating devices $e');
   }
