@@ -1,4 +1,3 @@
-import 'package:tekartik_browser_utils/browser_utils_import.dart';
 import 'package:tekartik_camera_web/media_devices.dart';
 import 'package:tekartik_camera_web/media_devices_web.dart';
 import 'package:web/web.dart' as web;
