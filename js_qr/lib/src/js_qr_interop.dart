@@ -1,4 +1,4 @@
-library tekartik_js_qr_interop;
+library;
 
 import 'dart:js_interop' as js;
 
