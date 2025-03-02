@@ -12,7 +12,7 @@ void write(Object msg) {
   } else {
     _existing = [_existing, text].join('\n');
   }
-  web.document.querySelector('#output')!.text = _existing!;
+  web.document.querySelector('#output')!.textContent = _existing!;
 }
 
 var mediaDevices = mediaDevicesBrowser;
