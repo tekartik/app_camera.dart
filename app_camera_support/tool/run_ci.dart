@@ -37,7 +37,7 @@ Future main(List<String> arguments) async {
   // Flutter test
   for (var dir in <String>[
     'qrscan_flutter_web',
-    'qrscan_flutter_web_example'
+    'qrscan_flutter_web_example',
   ]) {
     shell = shell.pushd(dir);
     await execute(() async {

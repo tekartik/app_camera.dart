@@ -32,7 +32,8 @@ class MediaDevicesBrowser implements MediaDevices {
 
     return jsMediaDeviceInfos
         .map<MediaDeviceInfo>(
-            (jsMediaDeviceInfo) => MediaDeviceInfoBrowser(jsMediaDeviceInfo))
+          (jsMediaDeviceInfo) => MediaDeviceInfoBrowser(jsMediaDeviceInfo),
+        )
         .toList(growable: false);
   }
 
@@ -48,12 +49,14 @@ class MediaDevicesBrowser implements MediaDevices {
       trackConstraints.facingMode = constraint.video!.facingMode!.toJS;
     }
 
-    var webMediaStream = await web.window.navigator.mediaDevices
-        .getUserMedia(webConstraints)
-        .toDart;
+    var webMediaStream =
+        await web.window.navigator.mediaDevices
+            .getUserMedia(webConstraints)
+            .toDart;
 
     return MediaStreamWeb(
-        webMediaStream); // await promiseToFuture(nativeUserMedia);
+      webMediaStream,
+    ); // await promiseToFuture(nativeUserMedia);
   }
 
   @override

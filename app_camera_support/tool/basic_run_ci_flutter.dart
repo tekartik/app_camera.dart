@@ -8,7 +8,7 @@ Future main() async {
     'camera_web',
     'js_qr',
     'qrscan_flutter_web',
-    'qrscan_flutter_web_example'
+    'qrscan_flutter_web_example',
   ]) {
     await packageRunCi(join(topDir, dir));
   }

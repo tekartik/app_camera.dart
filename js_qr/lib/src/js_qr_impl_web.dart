@@ -9,21 +9,25 @@ import 'js_qr_impl.dart';
 QrCodePointImpl fromJsQrCodePoint(JsQrPoint jsQrPoint) =>
     QrCodePointImpl(jsQrPoint.x, jsQrPoint.y);
 
-QrCode decodeQrCodeImpl(
-    {required Uint8ClampedList imageData,
-    required int width,
-    required int height,
-    QrCodeOptions? options}) {
+QrCode decodeQrCodeImpl({
+  required Uint8ClampedList imageData,
+  required int width,
+  required int height,
+  QrCodeOptions? options,
+}) {
   options ??= QrCodeOptions();
-  var jsQrCodeOptions =
-      JsQrCodeOptions(inversionAttempts: options.inversionAttempts);
+  var jsQrCodeOptions = JsQrCodeOptions(
+    inversionAttempts: options.inversionAttempts,
+  );
   var jsQrCode = jsDecodeQrCode(imageData.toJS, width, height, jsQrCodeOptions);
 
   return QrCodeImpl(
-      data: jsQrCode.data,
-      location: QrCodeLocationImpl(
-          bottomLeft: fromJsQrCodePoint(jsQrCode.location.bottomLeftCorner),
-          bottomRight: fromJsQrCodePoint(jsQrCode.location.bottomRightCorner),
-          topLeft: fromJsQrCodePoint(jsQrCode.location.topLeftCorner),
-          topRight: fromJsQrCodePoint(jsQrCode.location.topRightCorner)));
+    data: jsQrCode.data,
+    location: QrCodeLocationImpl(
+      bottomLeft: fromJsQrCodePoint(jsQrCode.location.bottomLeftCorner),
+      bottomRight: fromJsQrCodePoint(jsQrCode.location.bottomRightCorner),
+      topLeft: fromJsQrCodePoint(jsQrCode.location.topLeftCorner),
+      topRight: fromJsQrCodePoint(jsQrCode.location.topRightCorner),
+    ),
+  );
 }

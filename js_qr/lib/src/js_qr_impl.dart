@@ -46,11 +46,12 @@ class QrCodeLocationImpl implements QrCodeLocation {
   @override
   final QrCodePoint topRight;
 
-  QrCodeLocationImpl(
-      {required this.bottomLeft,
-      required this.bottomRight,
-      required this.topLeft,
-      required this.topRight});
+  QrCodeLocationImpl({
+    required this.bottomLeft,
+    required this.bottomRight,
+    required this.topLeft,
+    required this.topRight,
+  });
 
   @override
   String toString() => '$topLeft $topRight $bottomRight $bottomLeft';
@@ -74,5 +75,5 @@ class QrCodeOptionsImpl implements QrCodeOptions {
   final String inversionAttempts;
 
   QrCodeOptionsImpl({required String? inversionAttempts})
-      : inversionAttempts = inversionAttempts ?? inversionAttemptDontInvert;
+    : inversionAttempts = inversionAttempts ?? inversionAttemptDontInvert;
 }

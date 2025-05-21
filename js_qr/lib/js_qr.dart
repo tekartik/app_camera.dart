@@ -63,10 +63,14 @@ abstract class QrCode {
 /// Attempt to decode a QR code from an image data.
 ///
 /// Returns null if non found
-QrCode decodeQrCode(
-        {required Uint8ClampedList imageData,
-        required int width,
-        required int height,
-        QrCodeOptions? options}) =>
-    decodeQrCodeImpl(
-        imageData: imageData, width: width, height: height, options: options);
+QrCode decodeQrCode({
+  required Uint8ClampedList imageData,
+  required int width,
+  required int height,
+  QrCodeOptions? options,
+}) => decodeQrCodeImpl(
+  imageData: imageData,
+  width: width,
+  height: height,
+  options: options,
+);

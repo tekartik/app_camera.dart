@@ -67,8 +67,9 @@ class _HomePageState extends State<HomePage> {
         _qrCodeData = data;
       });
     } else {
-      ScaffoldMessenger.of(context)
-          .showSnackBar(SnackBar(content: Text('Only supported on the web')));
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(content: Text('Only supported on the web')));
     }
   }
 
@@ -94,15 +95,10 @@ class _HomePageState extends State<HomePage> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             if (_qrCodeData == null)
-              Text(
-                'No QR code found',
-              )
+              Text('No QR code found')
             else ...[
               Text('QR code found'),
-              Text(
-                _qrCodeData!,
-                style: TextStyle(fontSize: 18),
-              )
+              Text(_qrCodeData!, style: TextStyle(fontSize: 18)),
             ],
           ],
         ),

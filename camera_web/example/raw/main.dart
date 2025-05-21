@@ -44,8 +44,11 @@ Future main() async {
       return;
     } else {
       write('getting stream deviceId ${deviceInfo.deviceId}');
-      var stream = await mediaDevices.getUserMedia(GetUserMediaConstraint(
-          video: GetUserMediaVideoConstraint(deviceId: deviceInfo.deviceId)));
+      var stream = await mediaDevices.getUserMedia(
+        GetUserMediaConstraint(
+          video: GetUserMediaVideoConstraint(deviceId: deviceInfo.deviceId),
+        ),
+      );
       write('got stream');
       video!.srcObject = (stream as MediaStreamWeb).htmlMediaStream;
     }

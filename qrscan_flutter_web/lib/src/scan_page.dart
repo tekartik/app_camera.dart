@@ -57,9 +57,10 @@ class _ScanPageState extends State<ScanPage> {
   void _initCanvas() {
     if (canvasElement == null) {
       try {
-        canvasElement = web.HTMLCanvasElement()
-          ..width = videoElement!.videoWidth
-          ..height = videoElement!.videoHeight;
+        canvasElement =
+            web.HTMLCanvasElement()
+              ..width = videoElement!.videoWidth
+              ..height = videoElement!.videoHeight;
         canvas = canvasElement!.context2D;
         registerViewFactoryWeb(viewType, (int viewId) {
           return canvasElement!;
@@ -93,10 +94,14 @@ class _ScanPageState extends State<ScanPage> {
     () async {
       try {
         // print('getting user media');
-        var stream = mediaStream = await mediaDevices.getUserMedia(
-            GetUserMediaConstraint(
+        var stream =
+            mediaStream = await mediaDevices.getUserMedia(
+              GetUserMediaConstraint(
                 video: GetUserMediaVideoConstraint(
-                    facingMode: mediaVideoConstraintFacingModeEnvironment)));
+                  facingMode: mediaVideoConstraintFacingModeEnvironment,
+                ),
+              ),
+            );
         /*
         var stream = await mediaDevices.getUserMedia(GetUserMediaConstraint(
             video: GetUserMediaVideoConstraint(deviceId: deviceInfo.deviceId)));
@@ -111,7 +116,8 @@ class _ScanPageState extends State<ScanPage> {
         // print('error getting user Media $e');
         if (mounted) {
           ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(content: Text('error getting user Media $e')));
+            SnackBar(content: Text('error getting user Media $e')),
+          );
         }
       }
     }();
@@ -119,9 +125,11 @@ class _ScanPageState extends State<ScanPage> {
 
   Future<void> get animationFrame {
     var completer = Completer<void>.sync();
-    web.window.requestAnimationFrame((JSAny time) {
-      completer.complete();
-    }.toJS);
+    web.window.requestAnimationFrame(
+      (JSAny time) {
+        completer.complete();
+      }.toJS,
+    );
     return completer.future;
   }
 
@@ -136,15 +144,23 @@ class _ScanPageState extends State<ScanPage> {
         canvasElement!.height = videoElement!.videoHeight;
         canvasElement!.width = videoElement!.videoWidth;
         canvas!.drawImage(
-            (videoElement as VideoElementWeb).nativeVideoElement, 0, 0);
+          (videoElement as VideoElementWeb).nativeVideoElement,
+          0,
+          0,
+        );
 
-        var imageData = canvas!
-            .getImageData(0, 0, canvasElement!.width, canvasElement!.height);
+        var imageData = canvas!.getImageData(
+          0,
+          0,
+          canvasElement!.width,
+          canvasElement!.height,
+        );
         try {
           var qrCode = decodeQrCode(
-              imageData: imageData.data.toDart,
-              width: canvasElement!.width,
-              height: canvasElement!.height);
+            imageData: imageData.data.toDart,
+            width: canvasElement!.width,
+            height: canvasElement!.height,
+          );
 
           var color = '#FF3B58';
           void drawLine(QrCodePoint begin, QrCodePoint end) {
@@ -190,25 +206,31 @@ class _ScanPageState extends State<ScanPage> {
     return Scaffold(
       key: scaffoldKey,
       appBar: widget.title != null ? AppBar(title: Text(widget.title!)) : null,
-      body: Column(children: [
-        Expanded(
+      body: Column(
+        children: [
+          Expanded(
             child: Row(
-          children: <Widget>[
-            Expanded(
-              child: Container(
-                color: Colors.black,
-                child: _webcamWidget != null
-                    ? Align(
-                        alignment: Alignment.center,
-                        child: AspectRatio(
-                            aspectRatio: _aspectRatio, child: _webcamWidget),
-                      )
-                    : null,
-              ),
+              children: <Widget>[
+                Expanded(
+                  child: Container(
+                    color: Colors.black,
+                    child:
+                        _webcamWidget != null
+                            ? Align(
+                              alignment: Alignment.center,
+                              child: AspectRatio(
+                                aspectRatio: _aspectRatio,
+                                child: _webcamWidget,
+                              ),
+                            )
+                            : null,
+                  ),
+                ),
+              ],
             ),
-          ],
-        ))
-      ]),
+          ),
+        ],
+      ),
     );
   }
 }
