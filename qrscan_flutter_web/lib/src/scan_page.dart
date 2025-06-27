@@ -57,10 +57,9 @@ class _ScanPageState extends State<ScanPage> {
   void _initCanvas() {
     if (canvasElement == null) {
       try {
-        canvasElement =
-            web.HTMLCanvasElement()
-              ..width = videoElement!.videoWidth
-              ..height = videoElement!.videoHeight;
+        canvasElement = web.HTMLCanvasElement()
+          ..width = videoElement!.videoWidth
+          ..height = videoElement!.videoHeight;
         canvas = canvasElement!.context2D;
         registerViewFactoryWeb(viewType, (int viewId) {
           return canvasElement!;
@@ -94,14 +93,13 @@ class _ScanPageState extends State<ScanPage> {
     () async {
       try {
         // print('getting user media');
-        var stream =
-            mediaStream = await mediaDevices.getUserMedia(
-              GetUserMediaConstraint(
-                video: GetUserMediaVideoConstraint(
-                  facingMode: mediaVideoConstraintFacingModeEnvironment,
-                ),
-              ),
-            );
+        var stream = mediaStream = await mediaDevices.getUserMedia(
+          GetUserMediaConstraint(
+            video: GetUserMediaVideoConstraint(
+              facingMode: mediaVideoConstraintFacingModeEnvironment,
+            ),
+          ),
+        );
         /*
         var stream = await mediaDevices.getUserMedia(GetUserMediaConstraint(
             video: GetUserMediaVideoConstraint(deviceId: deviceInfo.deviceId)));
@@ -214,16 +212,15 @@ class _ScanPageState extends State<ScanPage> {
                 Expanded(
                   child: Container(
                     color: Colors.black,
-                    child:
-                        _webcamWidget != null
-                            ? Align(
-                              alignment: Alignment.center,
-                              child: AspectRatio(
-                                aspectRatio: _aspectRatio,
-                                child: _webcamWidget,
-                              ),
-                            )
-                            : null,
+                    child: _webcamWidget != null
+                        ? Align(
+                            alignment: Alignment.center,
+                            child: AspectRatio(
+                              aspectRatio: _aspectRatio,
+                              child: _webcamWidget,
+                            ),
+                          )
+                        : null,
                   ),
                 ),
               ],

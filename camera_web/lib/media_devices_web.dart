@@ -49,10 +49,9 @@ class MediaDevicesBrowser implements MediaDevices {
       trackConstraints.facingMode = constraint.video!.facingMode!.toJS;
     }
 
-    var webMediaStream =
-        await web.window.navigator.mediaDevices
-            .getUserMedia(webConstraints)
-            .toDart;
+    var webMediaStream = await web.window.navigator.mediaDevices
+        .getUserMedia(webConstraints)
+        .toDart;
 
     return MediaStreamWeb(
       webMediaStream,
@@ -61,8 +60,8 @@ class MediaDevicesBrowser implements MediaDevices {
 
   @override
   MediaTrackSupportedConstraints getSupportedConstraints() {
-    var webSupportedConstraints =
-        web.window.navigator.mediaDevices.getSupportedConstraints();
+    var webSupportedConstraints = web.window.navigator.mediaDevices
+        .getSupportedConstraints();
     return MediaTrackSupportedConstraintsBrowser(webSupportedConstraints);
   }
 }
