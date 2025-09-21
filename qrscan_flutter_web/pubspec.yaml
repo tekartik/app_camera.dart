@@ -14,36 +14,24 @@ dependencies:
     git:
       url: https://github.com/tekartik/app_camera.dart
       path: camera_web
-      ref: dart3a
     version: '>=0.1.0'
   tekartik_js_qr:
     git:
       url: https://github.com/tekartik/app_camera.dart
       path: js_qr
-      ref: dart3a
     version: '>=0.1.0'
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
   dev_build: ">=1.1.2"
-  tekartik_app_lints_flutter:
-    git:
-      url: https://github.com/tekartik/app_flutter_utils.dart
-      ref: dart3a
-      path: app_lints
-    version: '>=0.1.0'
-dependency_overrides:
-  tekartik_camera_web:
-    path: ../camera_web
-  tekartik_js_qr:
-    path: ../js_qr
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
 
 # The following section is specific to Flutter.
 flutter:
+resolution: workspace
 
   # To add assets to your package, add an assets section, like this:
   # assets:

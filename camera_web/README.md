@@ -10,6 +10,5 @@ dependencies:
     git:
       url: https://github.com/tekartik/app_camera.dart
       path: camera_web
-      ref: dart3a
     version: '>=0.1.0'
 ```

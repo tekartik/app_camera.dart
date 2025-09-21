@@ -10,7 +10,6 @@ dependencies:
   tekartik_browser_utils:
     git:
       url: https://github.com/tekartik/browser_utils.dart
-      ref: dart3a
   web:
 dev_dependencies:
   build_runner: ">=2.4.13"
@@ -19,3 +18,4 @@ dev_dependencies:
   process_run: ">=1.2.1+1"
   test: ">=1.24.0"
   dev_build: ">=1.1.2"
+resolution: workspace

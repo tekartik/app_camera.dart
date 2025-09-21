@@ -14,7 +14,6 @@ dependencies:
     git:
       url: https://github.com/tekartik/app_camera.dart
       path: qrscan_flutter_web
-      ref: dart3a
     version: '>=0.1.0'
   cupertino_icons: ">=1.0.8"
 
@@ -25,16 +24,8 @@ dev_dependencies:
   tekartik_app_lints_flutter:
     git:
       url: https://github.com/tekartik/app_flutter_utils.dart
-      ref: dart3a
       path: app_lints
     version: '>=0.1.0'
-dependency_overrides:
-  tekartik_qrscan_flutter_web:
-    path: ../qrscan_flutter_web
-  tekartik_camera_web:
-    path: ../camera_web
-  tekartik_js_qr:
-    path: ../js_qr
 flutter:
   uses-material-design: true
 
@@ -42,3 +33,4 @@ flutter:
   assets:
     # include js_qr javascript file
     - packages/tekartik_js_qr/js/js_qr.js
+resolution: workspace
