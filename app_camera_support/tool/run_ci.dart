@@ -13,7 +13,7 @@ Future main(List<String> arguments) async {
 
   var results = parser.parse(arguments);
   if (results['help'] as bool) {
-    print(parser.usage);
+    stdout.writeln(parser.usage);
     exit(0);
   }
   var parallel = results['parallel'] as bool?;
