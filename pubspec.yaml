@@ -7,6 +7,7 @@ workspace:
   - camera_web
   - js_qr
   - qrscan_flutter
-  - qrscan_flutter_web
   - qrscan_flutter_example
+  - qrscan_flutter_mobile_scanner
+  - qrscan_flutter_web
 

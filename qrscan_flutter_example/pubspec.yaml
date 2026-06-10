@@ -15,6 +15,11 @@ dependencies:
       url: https://github.com/tekartik/app_camera.dart
       path: qrscan_flutter_web
     version: '>=0.1.0'
+  tekartik_qrscan_flutter_mobile_scanner:
+    git:
+      url: https://github.com/tekartik/app_camera.dart
+      path: qrscan_flutter_mobile_scanner
+    version: '>=0.1.0'
   cupertino_icons: ">=1.0.9"
 
 dev_dependencies:

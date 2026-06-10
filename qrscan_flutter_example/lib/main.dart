@@ -2,6 +2,7 @@
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:tekartik_qrscan_flutter_mobile_scanner/qrscan_flutter_mobile_scanner.dart';
 import 'package:tekartik_qrscan_flutter_web/qrscan_flutter_web.dart';
 
 void main() {
@@ -17,6 +18,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Scan QR Code demo',
       theme: ThemeData(
+        brightness: Brightness.dark,
         // This is the theme of your application.
         //
         // Try running your application with "flutter run". You'll see the
@@ -114,6 +116,13 @@ class _HomePageState extends State<HomePage> {
                     _serviceScanQrCode(qrCodeScanServiceWeb);
                   },
                   child: Text('Scan with js_qr_web'),
+                ),
+                SizedBox(height: 10),
+                ElevatedButton(
+                  onPressed: () {
+                    _serviceScanQrCode(qrCodeScanServiceMobileScanner);
+                  },
+                  child: Text('Scan with mobile_scanner'),
                 ),
                 SizedBox(height: 20),
                 if (_qrCodeData == null)

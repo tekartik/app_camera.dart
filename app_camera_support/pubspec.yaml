@@ -8,6 +8,14 @@ environment:
 
 dependencies:
   process_run: ">=1.3.4"
+  tekartik_flutter_build:
+    git:
+      url: https://github.com/tekartik/app_build.dart
+      path: packages/flutter_build
+  tekartik_web_publish:
+    git:
+      url: https://github.com/tekartik/app_build.dart
+      path: packages/web_publish
 
 dev_dependencies:
   test: ">=1.31.0"

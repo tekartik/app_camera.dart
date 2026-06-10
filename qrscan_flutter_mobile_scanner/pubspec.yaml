@@ -1,0 +1,24 @@
+name: tekartik_qrscan_flutter_mobile_scanner
+description: QR scan for flutter using mobile_scanner
+version: 0.1.0
+publish_to: none
+
+environment:
+  sdk: ^3.12.0
+
+dependencies:
+  flutter:
+    sdk: flutter
+  mobile_scanner: ">=6.0.0 <8.0.0"
+  tekartik_qrscan_flutter:
+    git:
+      url: https://github.com/tekartik/app_camera.dart
+      path: qrscan_flutter
+    version: '>=0.1.0'
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  dev_build: ">=1.1.7+3"
+
+resolution: workspace
