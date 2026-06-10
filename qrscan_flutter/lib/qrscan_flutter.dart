@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'package:flutter/material.dart';
 
 /// Options for QR code scanning.
@@ -5,8 +6,12 @@ class QRCodeScanOptions {
   /// Optional title for the scan screen.
   final String? title;
 
+  /// Optional validator callback (async returning bool) that allows testing
+  /// the scan data before exiting the scan page.
+  final FutureOr<bool> Function(String)? validator;
+
   /// Creates scan options.
-  const QRCodeScanOptions({this.title});
+  const QRCodeScanOptions({this.title, this.validator});
 }
 
 /// Service to scan QR codes.

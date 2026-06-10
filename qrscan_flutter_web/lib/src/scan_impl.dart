@@ -7,7 +7,7 @@ Future<String?> scanQrCode(BuildContext context, {QRCodeScanOptions? options}) {
   return Navigator.of(context).push(
     MaterialPageRoute<String>(
       builder: (BuildContext context) {
-        return ScanPage(title: options?.title);
+        return ScanPage(options: options);
       },
     ),
   );

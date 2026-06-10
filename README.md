@@ -5,3 +5,7 @@ Helper for accessing the Camera and scanning QR code for the web (including Flut
 * [`camera_web`](camera_web) Camera Media Web abstraction
 * [`js_qr`](js_qr) Dart Cozmo jsQR wrapper
 * [`qrscan_flutter_web`](qrscan_flutter_web) Flutter web qrcode scanner
+* [`qrscan_flutter_mobile_scanner`](qrscan_flutter_mobile_scanner) Flutter web qrcode scanner using [mobile_scanner](https://pub.dev/packages/mobile_scanner) package
+
+Web demo:
+* https://qrscan-example.surge.sh/

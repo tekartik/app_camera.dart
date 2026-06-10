@@ -78,10 +78,13 @@ class _HomePageState extends State<HomePage> {
     }
   }
 
-  Future<void> _serviceScanQrCode(QRCodeScanService service) async {
+  Future<void> _serviceScanQrCode(
+    QRCodeScanService service, {
+    QRCodeScanOptions? options,
+  }) async {
     var data = await service.scanQrCode(
       context,
-      options: const QRCodeScanOptions(title: 'test'),
+      options: options ?? const QRCodeScanOptions(title: 'test'),
     );
     setState(() {
       _qrCodeData = data;
@@ -107,6 +110,7 @@ class _HomePageState extends State<HomePage> {
         // Center is a layout widget. It takes a single child and positions it
         // in the middle of the parent.
         child: ListView(
+          shrinkWrap: true,
           children: [
             Column(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -124,6 +128,32 @@ class _HomePageState extends State<HomePage> {
                   },
                   child: Text('Scan with mobile_scanner'),
                 ),
+                SizedBox(height: 10),
+                ElevatedButton(
+                  onPressed: () {
+                    _serviceScanQrCode(
+                      qrCodeScanServiceWeb,
+                      options: QRCodeScanOptions(
+                        title: 'test https',
+                        validator: (data) => data.startsWith('https://'),
+                      ),
+                    );
+                  },
+                  child: Text('Scan with js_qr_web (https only)'),
+                ),
+                SizedBox(height: 10),
+                ElevatedButton(
+                  onPressed: () {
+                    _serviceScanQrCode(
+                      qrCodeScanServiceMobileScanner,
+                      options: QRCodeScanOptions(
+                        title: 'test https',
+                        validator: (data) => data.startsWith('https://'),
+                      ),
+                    );
+                  },
+                  child: Text('Scan with mobile_scanner (https only)'),
+                ),
                 SizedBox(height: 20),
                 if (_qrCodeData == null)
                   Text('No QR code found')
@@ -131,6 +161,7 @@ class _HomePageState extends State<HomePage> {
                   Text('QR code found'),
                   Text(_qrCodeData!, style: TextStyle(fontSize: 18)),
                 ],
+                SizedBox(height: 20),
               ],
             ),
           ],

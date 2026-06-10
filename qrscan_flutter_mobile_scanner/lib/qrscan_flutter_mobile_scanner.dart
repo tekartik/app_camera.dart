@@ -7,11 +7,14 @@ export 'package:tekartik_qrscan_flutter/qrscan_flutter.dart';
 /// Implementation of [QRCodeScanService] using mobile_scanner.
 class QRCodeScanServiceMobileScanner implements QRCodeScanService {
   @override
-  Future<String?> scanQrCode(BuildContext context, {QRCodeScanOptions? options}) {
+  Future<String?> scanQrCode(
+    BuildContext context, {
+    QRCodeScanOptions? options,
+  }) {
     return Navigator.of(context).push<String>(
       MaterialPageRoute<String>(
         builder: (BuildContext context) {
-          return _ScanPage(title: options?.title);
+          return _ScanPage(options: options);
         },
       ),
     );
@@ -22,9 +25,9 @@ class QRCodeScanServiceMobileScanner implements QRCodeScanService {
 final qrCodeScanServiceMobileScanner = QRCodeScanServiceMobileScanner();
 
 class _ScanPage extends StatefulWidget {
-  final String? title;
+  final QRCodeScanOptions? options;
 
-  const _ScanPage({this.title});
+  const _ScanPage({this.options});
 
   @override
   State<_ScanPage> createState() => _ScanPageState();
@@ -43,16 +46,24 @@ class _ScanPageState extends State<_ScanPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: widget.title != null ? AppBar(title: Text(widget.title!)) : null,
+      appBar: widget.options?.title != null
+          ? AppBar(title: Text(widget.options!.title!))
+          : null,
       body: MobileScanner(
         controller: _controller,
-        onDetect: (BarcodeCapture capture) {
+        onDetect: (BarcodeCapture capture) async {
           final barcodes = capture.barcodes;
           if (barcodes.isNotEmpty && !_popped) {
             final code = barcodes.first.rawValue;
             if (code != null) {
-              _popped = true;
-              Navigator.of(context).pop(code);
+              if (widget.options?.validator != null) {
+                var valid = await widget.options!.validator!(code);
+                if (!valid) return;
+              }
+              if (!_popped && context.mounted) {
+                _popped = true;
+                Navigator.of(context).pop(code);
+              }
             }
           }
         },

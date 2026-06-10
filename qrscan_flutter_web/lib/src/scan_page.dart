@@ -10,6 +10,7 @@ import 'package:tekartik_camera_web/media_devices_web.dart';
 import 'package:tekartik_camera_web/video_element.dart';
 import 'package:tekartik_camera_web/video_element_web.dart';
 import 'package:tekartik_js_qr/js_qr.dart';
+import 'package:tekartik_qrscan_flutter/qrscan_flutter.dart';
 import 'package:tekartik_qrscan_flutter_web/src/view_registry.dart';
 import 'package:web/web.dart' as web;
 
@@ -21,8 +22,11 @@ class ScanPage extends StatefulWidget {
   /// Optional title.
   final String? title;
 
+  /// Optional scan options.
+  final QRCodeScanOptions? options;
+
   /// If [title] is not specified no app bar is displayed
-  const ScanPage({super.key, this.title});
+  const ScanPage({super.key, this.title, this.options});
 
   @override
   // ignore: library_private_types_in_public_api
@@ -192,7 +196,14 @@ class _ScanPageState extends State<ScanPage> {
       _lastQrCodeData = data;
 
       _validateTimer?.cancel();
-      _validateTimer = Timer(Duration(milliseconds: 800), () {
+      _validateTimer = Timer(Duration(milliseconds: 800), () async {
+        if (data != null && widget.options?.validator != null) {
+          var valid = await widget.options!.validator!(data);
+          if (!valid) {
+            _lastQrCodeData = null;
+            return;
+          }
+        }
         if (mounted) {
           Navigator.of(context).pop(data);
         }
@@ -206,7 +217,9 @@ class _ScanPageState extends State<ScanPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       key: scaffoldKey,
-      appBar: widget.title != null ? AppBar(title: Text(widget.title!)) : null,
+      appBar: (widget.title ?? widget.options?.title) != null
+          ? AppBar(title: Text(widget.title ?? widget.options!.title!))
+          : null,
       body: Column(
         children: [
           Expanded(
