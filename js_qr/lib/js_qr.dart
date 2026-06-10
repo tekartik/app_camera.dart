@@ -23,6 +23,7 @@ abstract class QrCodeOptions {
   /// The option to attemptBoth causes a ~50% performance hit
   String get inversionAttempts;
 
+  /// Creates QR code options.
   factory QrCodeOptions({String? inversionAttempts}) =>
       QrCodeOptionsImpl(inversionAttempts: inversionAttempts);
 }

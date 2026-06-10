@@ -1,17 +1,27 @@
+/// Media device info kind for video.
 const String mediaDeviceInfoKindVideo = 'videoinput';
-// back camera
+
+/// Facing mode environment constraint.
 const String mediaVideoConstraintFacingModeEnvironment = 'environment';
 
+/// Video constraint for user media.
 class GetUserMediaVideoConstraint {
+  /// Device identifier.
   final String? deviceId;
+
+  /// Facing mode.
   final String? facingMode;
 
+  /// Creates user media video constraints.
   GetUserMediaVideoConstraint({this.deviceId, this.facingMode});
 }
 
+/// Constraint for get user media.
 class GetUserMediaConstraint {
+  /// Video constraints.
   final GetUserMediaVideoConstraint? video;
 
+  /// Creates user media constraints.
   GetUserMediaConstraint({this.video});
 }
 
@@ -49,6 +59,7 @@ abstract class MediaDeviceInfo {
   Map<String, Object?> toDebugMap();
 }
 
+/// Mixin for [MediaDeviceInfo].
 mixin MediaDeviceInfoMixin implements MediaDeviceInfo {
   @override
   String toString() => toDebugMap().toString();

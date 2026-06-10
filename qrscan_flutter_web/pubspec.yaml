@@ -10,6 +10,11 @@ dependencies:
   flutter:
     sdk: flutter
   web:
+  tekartik_qrscan_flutter:
+    git:
+      url: https://github.com/tekartik/app_camera.dart
+      path: qrscan_flutter
+    version: '>=0.1.0'
   tekartik_camera_web:
     git:
       url: https://github.com/tekartik/app_camera.dart
@@ -20,11 +25,15 @@ dependencies:
       url: https://github.com/tekartik/app_camera.dart
       path: js_qr
     version: '>=0.1.0'
+  tekartik_lints_flutter:
+    git:
+      url: https://github.com/tekartik/common_flutter.dart
+      path: packages/lints_flutter
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  dev_build: ">=1.1.7+3"
+  dev_build: ">=1.1.8+1"
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec

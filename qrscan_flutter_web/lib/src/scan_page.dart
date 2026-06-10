@@ -13,9 +13,12 @@ import 'package:tekartik_js_qr/js_qr.dart';
 import 'package:tekartik_qrscan_flutter_web/src/view_registry.dart';
 import 'package:web/web.dart' as web;
 
+/// Browser media devices.
 var mediaDevices = mediaDevicesBrowser;
 
+/// Scan page widget.
 class ScanPage extends StatefulWidget {
+  /// Optional title.
   final String? title;
 
   /// If [title] is not specified no app bar is displayed

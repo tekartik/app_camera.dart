@@ -2,6 +2,7 @@ import 'dart:typed_data';
 
 import 'package:tekartik_js_qr/js_qr.dart';
 
+/// Stub decoder for QR code.
 QrCode decodeQrCodeImpl({
   required Uint8ClampedList imageData,
   required int width,

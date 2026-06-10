@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:tekartik_qrscan_flutter/qrscan_flutter.dart';
 
-Future<String?> scanQrCode(BuildContext context, {String? title}) =>
-    throw UnsupportedError('scanQrCode only supported on the Web');
+/// Scan QR code stub.
+Future<String?> scanQrCode(
+  BuildContext context, {
+  QRCodeScanOptions? options,
+}) => throw UnsupportedError('scanQrCode only supported on the Web');

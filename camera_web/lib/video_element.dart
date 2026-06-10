@@ -1,5 +1,6 @@
 import 'package:tekartik_camera_web/media_devices.dart';
 
+/// Video element interface.
 abstract class VideoElement {
   /// Check ready state for HAVE_ENOUGH_DATA.
   bool get hasEnoughData;

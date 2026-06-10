@@ -5,11 +5,14 @@ import 'package:tekartik_camera_web/media_devices_web.dart';
 import 'package:tekartik_camera_web/video_element.dart';
 import 'package:web/web.dart' as web;
 
+/// Web implementation of [VideoElement].
 class VideoElementWeb implements VideoElement {
   late web.HTMLVideoElement _nativeVideoElement;
 
+  /// Native HTML video element getter.
   web.HTMLVideoElement get nativeVideoElement => _nativeVideoElement;
 
+  /// Creates a web video element.
   VideoElementWeb() {
     _nativeVideoElement = web.HTMLVideoElement();
   }

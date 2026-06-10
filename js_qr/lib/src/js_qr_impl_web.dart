@@ -6,9 +6,11 @@ import 'package:tekartik_js_qr/src/js_qr_interop.dart';
 
 import 'js_qr_impl.dart';
 
+/// Converts JS QR point to Dart QR point.
 QrCodePointImpl fromJsQrCodePoint(JsQrPoint jsQrPoint) =>
     QrCodePointImpl(jsQrPoint.x, jsQrPoint.y);
 
+/// Decodes QR code implementation on Web.
 QrCode decodeQrCodeImpl({
   required Uint8ClampedList imageData,
   required int width,

@@ -1,0 +1,22 @@
+name: tekartik_qrscan_flutter
+description: QR scan for flutter
+version: 0.1.0
+publish_to: none
+
+environment:
+  sdk: ^3.12.0
+
+dependencies:
+  flutter:
+    sdk: flutter
+  tekartik_lints_flutter:
+    git:
+      url: https://github.com/tekartik/common_flutter.dart
+      path: packages/lints_flutter
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  dev_build: ">=1.1.8+1"
+
+resolution: workspace

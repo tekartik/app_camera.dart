@@ -62,7 +62,10 @@ class _HomePageState extends State<HomePage> {
 
   Future _scanQrCode() async {
     if (kIsWeb) {
-      var data = await scanQrCode(context, title: 'test');
+      var data = await scanQrCode(
+        context,
+        options: const QRCodeScanOptions(title: 'test'),
+      );
       setState(() {
         _qrCodeData = data;
       });
@@ -71,6 +74,16 @@ class _HomePageState extends State<HomePage> {
         context,
       ).showSnackBar(SnackBar(content: Text('Only supported on the web')));
     }
+  }
+
+  Future<void> _serviceScanQrCode(QRCodeScanService service) async {
+    var data = await service.scanQrCode(
+      context,
+      options: const QRCodeScanOptions(title: 'test'),
+    );
+    setState(() {
+      _qrCodeData = data;
+    });
   }
 
   @override
@@ -91,15 +104,26 @@ class _HomePageState extends State<HomePage> {
       body: Center(
         // Center is a layout widget. It takes a single child and positions it
         // in the middle of the parent.
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            if (_qrCodeData == null)
-              Text('No QR code found')
-            else ...[
-              Text('QR code found'),
-              Text(_qrCodeData!, style: TextStyle(fontSize: 18)),
-            ],
+        child: ListView(
+          children: [
+            Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                ElevatedButton(
+                  onPressed: () {
+                    _serviceScanQrCode(qrCodeScanServiceWeb);
+                  },
+                  child: Text('Scan with js_qr_web'),
+                ),
+                SizedBox(height: 20),
+                if (_qrCodeData == null)
+                  Text('No QR code found')
+                else ...[
+                  Text('QR code found'),
+                  Text(_qrCodeData!, style: TextStyle(fontSize: 18)),
+                ],
+              ],
+            ),
           ],
         ),
       ),
