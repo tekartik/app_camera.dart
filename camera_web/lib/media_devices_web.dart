@@ -65,6 +65,7 @@ class MediaDevicesBrowser implements MediaDevices {
   MediaTrackSupportedConstraints getSupportedConstraints() {
     var webSupportedConstraints = web.window.navigator.mediaDevices
         .getSupportedConstraints();
+
     return MediaTrackSupportedConstraintsBrowser(webSupportedConstraints);
   }
 }

@@ -68,6 +68,7 @@ class _ScanPageState extends State<ScanPage> {
           ..width = videoElement!.videoWidth
           ..height = videoElement!.videoHeight;
         canvas = canvasElement!.context2D;
+
         registerViewFactoryWeb(viewType, (int viewId) {
           return canvasElement!;
         });
@@ -115,6 +116,7 @@ class _ScanPageState extends State<ScanPage> {
         // print('got user media');
 
         videoElement!.srcObject = stream;
+
         unawaited(videoElement!.play());
         await _tick();
       } on String catch (e) {
@@ -168,6 +170,7 @@ class _ScanPageState extends State<ScanPage> {
           );
 
           var color = '#FF3B58';
+
           void drawLine(QrCodePoint begin, QrCodePoint end) {
             canvas!.beginPath();
             canvas!.moveTo(begin.x, begin.y);
@@ -178,8 +181,11 @@ class _ScanPageState extends State<ScanPage> {
           }
 
           drawLine(qrCode.location!.topLeft, qrCode.location!.topRight);
+
           drawLine(qrCode.location!.topRight, qrCode.location!.bottomRight);
+
           drawLine(qrCode.location!.bottomRight, qrCode.location!.bottomLeft);
+
           drawLine(qrCode.location!.bottomLeft, qrCode.location!.topLeft);
           _validateQrCodeData(qrCode.data);
         } catch (_) {}
