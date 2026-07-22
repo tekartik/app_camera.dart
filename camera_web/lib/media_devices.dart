@@ -44,7 +44,7 @@ abstract class MediaDeviceInfo {
   /// (for Private Browsing, a different identifier is used that is not persisted across sessions).
   String? get deviceId;
 
-  /// Ggroup identifier. Two devices have the same group identifier
+  /// Group identifier. Two devices have the same group identifier
   /// if they belong to the same physical device — for example a monitor
   /// with both a built-in camera and a microphone.
   String? get groupId;
@@ -102,6 +102,13 @@ abstract class MediaDevices {
   /// With the user's permission through a prompt, turns on a camera and/or
   /// a microphone on the system and provides a MediaStream containing a video
   /// track and/or an audio track with the input.
+  ///
+  /// [constraint] selects which device(s) to use (e.g. via
+  /// [GetUserMediaVideoConstraint.deviceId] or `facingMode`).
+  ///
+  /// Returns the resulting [MediaStream]. The returned future completes
+  /// with an error if the user denies permission or no matching device is
+  /// available.
   Future<MediaStream> getUserMedia(GetUserMediaConstraint constraint);
 
   /// dictionary listing the constraints supported by the user agent.
