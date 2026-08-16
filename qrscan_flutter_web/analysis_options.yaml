@@ -4,3 +4,10 @@ include: package:tekartik_lints_flutter/package.yaml
 analyzer:
   exclude:
     - lib/src/view_registry.dart
+    - build/**
+    - android/**
+    - ios/**
+    - web/**
+    - windows/**
+    - macos/**
+    - linux/**
