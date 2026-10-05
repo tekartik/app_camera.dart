@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:tekartik_qrscan_flutter/qrscan_flutter.dart';
 
 /// Scan QR code stub.

@@ -19,7 +19,7 @@ dependencies:
 
 dev_dependencies:
   test: ">=1.31.0"
-  dev_build: ">=1.1.8+1"
+  dev_build: ">=1.1.8+2"
   tekartik_common_utils:
     git:
       url: https://github.com/tekartik/common_utils.dart

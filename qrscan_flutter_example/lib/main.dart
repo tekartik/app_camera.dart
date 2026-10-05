@@ -1,7 +1,7 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:flutter/foundation.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:tekartik_qrscan_flutter_mobile_scanner/qrscan_flutter_mobile_scanner.dart';
 import 'package:tekartik_qrscan_flutter_web/qrscan_flutter_web.dart';
 
@@ -72,9 +72,8 @@ class _HomePageState extends State<HomePage> {
         _qrCodeData = data;
       });
     } else {
-      ScaffoldMessenger.of(
-        context,
-      ).showSnackBar(SnackBar(content: Text('Only supported on the web')));
+      ScaffoldMessenger.of(context)
+          .showSnackBar(SnackBar(content: Text('Only supported on the web')));
     }
   }
 

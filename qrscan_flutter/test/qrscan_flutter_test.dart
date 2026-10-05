@@ -1,5 +1,5 @@
-import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:tekartik_qrscan_flutter/qrscan_flutter.dart';
 
 class MockQRCodeScanService implements QRCodeScanService {
