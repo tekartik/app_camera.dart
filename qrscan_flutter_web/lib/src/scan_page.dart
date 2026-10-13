@@ -85,11 +85,7 @@ class _ScanPageState extends State<ScanPage> {
   @override
   void initState() {
     super.initState();
-    _timeoutTimer = Timer(Duration(seconds: 60), () {
-      if (mounted) {
-        Navigator.of(context).pop();
-      }
-    });
+    _timeoutTimer = Timer(Duration(seconds: 60), _pop);
     viewType = '$_viewType-${++_id}';
     viewKey = UniqueKey();
     videoElement = VideoElementWeb();
@@ -197,12 +193,29 @@ class _ScanPageState extends State<ScanPage> {
 
   String? _lastQrCodeData;
 
+  /// The validator is async and the timeout can fire while it runs, and
+  /// [mounted] stays true during the exit transition: pop only once.
+  bool _popped = false;
+
+  void _pop([String? data]) {
+    if (!_popped && mounted) {
+      _popped = true;
+      Navigator.of(context).pop(data);
+    }
+  }
+
   void _validateQrCodeData(String? data) {
+    if (_popped) {
+      return;
+    }
     if (data != _lastQrCodeData) {
       _lastQrCodeData = data;
 
       _validateTimer?.cancel();
       _validateTimer = Timer(Duration(milliseconds: 800), () async {
+        if (_popped) {
+          return;
+        }
         if (data != null && widget.options?.validator != null) {
           var valid = await widget.options!.validator!(data);
           if (!valid) {
@@ -210,9 +223,7 @@ class _ScanPageState extends State<ScanPage> {
             return;
           }
         }
-        if (mounted) {
-          Navigator.of(context).pop(data);
-        }
+        _pop(data);
       });
     }
   }
