@@ -60,7 +60,7 @@ alone.
   implementation package from a widget.
 * Implementations available in the same repo:
   * `tekartik_qrscan_flutter_mobile_scanner` →
-    `qrCodeScanServiceMobileScanner` (Android/iOS/desktop, `mobile_scanner`).
+    `qrCodeScanServiceMobileScanner` (Android, iOS, macOS: `mobile_scanner`).
   * `tekartik_qrscan_flutter_web` → `qrCodeScanServiceWeb` and a top-level
     `scanQrCode(context, options:)`; needs the jsQR script in `index.html`
     and throws `UnsupportedError` off the web.
@@ -68,6 +68,9 @@ alone.
   origin (https or localhost); there is nothing in the contract to query
   permission, so surface the failure from the returned `null` / thrown
   error.
+* The implementations build their scan page with `package:material_ui`:
+  the app uses its `MaterialApp` (a `package:flutter/material.dart` app
+  fails with "No MaterialLocalizations found" on the scan page).
 * Testing: the contract is trivial to fake — implement `QRCodeScanService`
   and return a canned string (the package's own `test/` does exactly that).
   Use that fake in widget tests instead of a camera.
@@ -77,7 +80,7 @@ alone.
 ### A widget that scans through the injected service
 
 ```dart
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:tekartik_qrscan_flutter/qrscan_flutter.dart';
 
 class ScanButton extends StatefulWidget {
@@ -124,7 +127,7 @@ class _ScanButtonState extends State<ScanButton> {
 ### Reject codes on the scan page with an async validator
 
 ```dart
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:tekartik_qrscan_flutter/qrscan_flutter.dart';
 
 /// Keeps scanning until an https url the server accepts is found.
@@ -158,7 +161,7 @@ re-export the contract.
 
 ```dart
 import 'package:flutter/foundation.dart' show kIsWeb;
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:tekartik_qrscan_flutter_mobile_scanner/qrscan_flutter_mobile_scanner.dart';
 import 'package:tekartik_qrscan_flutter_web/qrscan_flutter_web.dart';
 
@@ -190,8 +193,8 @@ void main() {
 ### Fake service for widget tests
 
 ```dart
-import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:tekartik_qrscan_flutter/qrscan_flutter.dart';
 
 /// Returns [result] without opening any camera, after running the validator.
