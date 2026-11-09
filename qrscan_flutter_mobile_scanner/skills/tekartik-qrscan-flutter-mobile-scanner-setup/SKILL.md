@@ -55,9 +55,11 @@ and web through ZXing).
   `MobileScanner` + `MobileScannerController(formats: [BarcodeFormat.qrCode])`
   (last example) and keep the rest of the app on the abstract type.
 * Platform setup is mobile_scanner's:
-  * iOS/macOS: add `NSCameraUsageDescription` to `ios/Runner/Info.plist`
-    (and grant the Camera capability in Xcode for macOS), or the route opens
-    on a black preview and the app is rejected at review.
+  * iOS: add `NSCameraUsageDescription` to `ios/Runner/Info.plist`, or the
+    route opens on a black preview and the app is rejected at review.
+  * macOS: `NSCameraUsageDescription` in `macos/Runner/Info.plist` and the
+    `com.apple.security.device.camera` entitlement in
+    `macos/Runner/DebugProfile.entitlements` and `Release.entitlements`.
   * Android: nothing required; the bundled MLKit model adds ~3-10 MB. Add
     `dev.steenbakker.mobile_scanner.useUnbundled=true` to
     `android/gradle.properties` to download it from Play Services instead.
@@ -68,17 +70,17 @@ and web through ZXing).
   qrCodeScanServiceMobileScanner` when you also use
   `tekartik_qrscan_flutter_web`); widgets should never import this package
   directly.
-* Testing: nothing here can run in `flutter test` (no camera, plugin channels
-  missing). The package's own test only checks
-  `qrCodeScanServiceMobileScanner is QRCodeScanService`; in app tests inject
-  a fake `QRCodeScanService` returning a canned string.
+* Testing: no camera in `flutter test`. The package's own test pushes the scan
+  page (the `MobileScanner` widget builds without a camera) and checks that
+  closing it returns `null`; in app tests inject a fake `QRCodeScanService`
+  returning a canned string.
 
 ## Examples
 
 ### Scan from a button
 
 ```dart
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:tekartik_qrscan_flutter_mobile_scanner/qrscan_flutter_mobile_scanner.dart';
 
 void main() {
@@ -111,7 +113,7 @@ void main() {
 ### Inject the service, validate before leaving the page
 
 ```dart
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:tekartik_qrscan_flutter_mobile_scanner/qrscan_flutter_mobile_scanner.dart';
 
 /// The app scan service, typed as the abstract contract.
@@ -133,7 +135,7 @@ Future<String?> scanMyAppId(BuildContext context) async {
 ### A custom scan page (QR only, torch toggle) behind the same contract
 
 ```dart
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:mobile_scanner/mobile_scanner.dart';
 import 'package:tekartik_qrscan_flutter_mobile_scanner/qrscan_flutter_mobile_scanner.dart';
 
@@ -207,7 +209,7 @@ class _QrOnlyScanPageState extends State<QrOnlyScanPage> {
 ### Fake the service in widget tests
 
 ```dart
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:tekartik_qrscan_flutter_mobile_scanner/qrscan_flutter_mobile_scanner.dart';
 
