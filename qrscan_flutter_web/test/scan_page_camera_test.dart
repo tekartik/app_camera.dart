@@ -5,6 +5,9 @@ library;
 import 'dart:async';
 import 'dart:js_interop';
 
+// On purpose: the scan page inside an app still built on
+// package:flutter/material.dart (deprecated in Flutter beta).
+// ignore: deprecated_member_use
 import 'package:flutter/material.dart' as flutter_material;
 import 'package:flutter_test/flutter_test.dart';
 import 'package:material_ui/material_ui.dart';
