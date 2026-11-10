@@ -81,13 +81,25 @@ class _HomePageState extends State<HomePage> {
     QRCodeScanService service, {
     QRCodeScanOptions? options,
   }) async {
-    var data = await service.scanQrCode(
-      context,
-      options: options ?? const QRCodeScanOptions(title: 'test'),
-    );
-    setState(() {
-      _qrCodeData = data;
-    });
+    String? data;
+    try {
+      data = await service.scanQrCode(
+        context,
+        options: options ?? const QRCodeScanOptions(title: 'test'),
+      );
+    } catch (e) {
+      // The jsQR service throws an UnsupportedError off the web.
+      if (mounted) {
+        ScaffoldMessenger.of(context)
+            .showSnackBar(SnackBar(content: Text('$e')));
+      }
+      return;
+    }
+    if (mounted) {
+      setState(() {
+        _qrCodeData = data;
+      });
+    }
   }
 
   @override
