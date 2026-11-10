@@ -44,7 +44,8 @@ class MediaDevicesBrowser implements MediaDevices {
   Future<MediaStream> getUserMedia(GetUserMediaConstraint constraint) async {
     var webConstraints = web.MediaStreamConstraints();
     var trackConstraints = web.MediaTrackConstraints();
-    webConstraints.video = web.MediaTrackConstraints();
+    // The device id and the facing mode below go in the video constraints.
+    webConstraints.video = trackConstraints;
     if (constraint.video!.deviceId != null) {
       trackConstraints.deviceId = constraint.video!.deviceId!.toJS;
     }

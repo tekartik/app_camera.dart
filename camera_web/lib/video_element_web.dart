@@ -27,7 +27,7 @@ class VideoElementWeb implements VideoElement {
 
   @override
   set autoplay(bool autoplay) {
-    _nativeVideoElement.autoplay = true;
+    _nativeVideoElement.autoplay = autoplay;
   }
 
   @override

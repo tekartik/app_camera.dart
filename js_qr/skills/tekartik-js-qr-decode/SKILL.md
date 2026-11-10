@@ -28,7 +28,6 @@ loaded by the page.
       git:
         url: https://github.com/tekartik/app_camera.dart
         path: js_qr
-      version: '>=0.1.0'
   ```
 * Single library: `package:tekartik_js_qr/js_qr.dart`, exporting
   `decodeQrCode`, `QrCode`, `QrCodeLocation`, `QrCodePoint`, `QrCodeOptions`
@@ -56,7 +55,9 @@ loaded by the page.
   the CSS size.
 * Failure is an exception, not `null`. jsQR returns `null` when no code is
   found and the wrapper dereferences it, so a frame without a QR code throws
-  (a JS error). Always wrap the call: `try { ... } catch (_) { /* no code */ }`
+  (`Null check operator used on a null value`, a `NullError` on dart2js, a
+  `TypeError` on dart2wasm), although the dartdoc said "returns null" until
+  2026-11. Always wrap the call: `try { ... } catch (_) { /* no code */ }`
   — that is exactly what `tekartik_qrscan_flutter_web` does in its frame loop.
   Off the web, the conditional-import stub throws
   `UnsupportedError('decodeQrCodeImpl')`.

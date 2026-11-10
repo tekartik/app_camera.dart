@@ -1,3 +1,7 @@
+/// QR code decoding in the browser, a wrapper of the jsQR JavaScript library
+/// (`lib/js/js_qr.js`, to load in the page): [decodeQrCode].
+library;
+
 import 'dart:typed_data';
 
 import 'package:tekartik_js_qr/src/js_qr_impl.dart';
@@ -61,9 +65,14 @@ abstract class QrCode {
   QrCodeLocation? get location;
 }
 
-/// Attempt to decode a QR code from an image data.
+/// Decodes the QR code found in [imageData], the RGBA bytes (4 per pixel,
+/// `width * height * 4`) of an image, e.g. `getImageData(...).data.toDart` of
+/// a canvas.
 ///
-/// Returns null if non found
+/// Throws when the image holds no QR code (jsQR answers null: the error is a
+/// `Null check operator used on a null value`), so wrap each call in a
+/// try/catch. Needs `packages/tekartik_js_qr/js/js_qr.js` loaded by the page;
+/// throws [UnsupportedError] off the web.
 QrCode decodeQrCode({
   required Uint8ClampedList imageData,
   required int width,

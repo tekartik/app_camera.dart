@@ -6,10 +6,12 @@ const String mediaVideoConstraintFacingModeEnvironment = 'environment';
 
 /// Video constraint for user media.
 class GetUserMediaVideoConstraint {
-  /// Device identifier.
+  /// Device identifier (`MediaDeviceInfo.deviceId`), an ideal value: the
+  /// browser may open another camera.
   final String? deviceId;
 
-  /// Facing mode.
+  /// Facing mode (`user`, [mediaVideoConstraintFacingModeEnvironment]), an
+  /// ideal value.
   final String? facingMode;
 
   /// Creates user media video constraints.

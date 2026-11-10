@@ -52,7 +52,8 @@ Future main() async {
       write('got stream');
       video!.srcObject = (stream as MediaStreamWeb).htmlMediaStream;
     }
-  } on String catch (e) {
-    write('error enumerating devices $e');
+  } catch (e) {
+    // A DOMException: permission refused, no camera, not a secure page...
+    write('error getting the camera $e');
   }
 }

@@ -29,7 +29,6 @@ instantiate in a browser (or in Flutter web through
       git:
         url: https://github.com/tekartik/app_camera.dart
         path: camera_web
-      version: '>=0.1.0'
   ```
 * Four libraries, in two pairs:
   * `package:tekartik_camera_web/media_devices.dart`: the abstractions
@@ -62,14 +61,13 @@ instantiate in a browser (or in Flutter web through
   dereferenced with `!`: always pass
   `GetUserMediaConstraint(video: GetUserMediaVideoConstraint(...))`, never
   `GetUserMediaConstraint()`.
-* Caveat in the current browser implementation: `MediaDevicesBrowser`
-  builds the `web.MediaTrackConstraints` from `deviceId` / `facingMode` but
-  assigns a fresh empty one to `MediaStreamConstraints.video`, so both hints
-  are effectively dropped and the user agent picks the default camera. Treat
-  camera selection as best-effort; do not build a UI that promises a
-  specific camera without checking the resulting track, and fall back to
-  `web.window.navigator.mediaDevices` directly when you really need the
-  constraint applied.
+* `deviceId` and `facingMode` are sent as the video constraints of
+  `navigator.mediaDevices.getUserMedia` (before 2026-11 they were dropped
+  and the default camera always opened). Both are *ideal* values: the
+  browser may still open another camera (a `deviceId` that no longer
+  exists, a laptop without a back camera). When a specific camera is a
+  must, call `web.window.navigator.mediaDevices.getUserMedia` yourself with
+  `{exact: id}`.
 * `getUserMedia()` rejects when the user denies permission, when the page is
   not on a secure origin (https or localhost) or when no camera matches:
   wrap it in `try`/`catch` and show the failure.
@@ -81,17 +79,18 @@ instantiate in a browser (or in Flutter web through
   using `web.HTMLVideoElement` directly.
 * Playback rules for mobile browsers: call `allowPlayInline()` (sets
   `playsInline`, required by Safari to capture without going full screen)
-  and set `autoplay = true` before `play()`. Note `autoplay` ignores its
-  argument and always sets `true`; use `pause()` to stop. `play()` may still
-  reject without a user gesture, so call it from a click/tap handler.
+  and set `autoplay = true` before `play()` (`autoplay = false` turns it off
+  again). `play()` may still reject without a user gesture, so call it from
+  a click/tap handler.
 * Before reading frames (canvas capture, QR decoding) wait for
   `hasEnoughData` (`readyState == HAVE_ENOUGH_DATA`) and use `videoWidth` /
   `videoHeight`, which are 0 until then.
 * `getSupportedConstraints()` tells you whether the user agent supports
   `facingMode`; `toDebugMap()` on it (and on `MediaDeviceInfo`) returns a
   plain map, handy for logging in the browser console.
-* No mocks or fakes are shipped: the `test/` folder is a stub because
-  everything here needs a real browser. Test with
+* No mocks or fakes are shipped. `test/media_devices_web_test.dart` checks
+  the constraints sent by replacing `navigator.mediaDevices.getUserMedia`
+  with a recording function (no camera needed). Test with
   `dart test -p chrome` (or `-p chrome --pause-after-load` to grant camera
   permission by hand) and run the demo with
   `dart run tool/run_web.dart` (webdev on <http://localhost:8061/raw/index.html>).
