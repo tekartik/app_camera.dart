@@ -77,14 +77,26 @@ but the jsQR script must be loaded by `index.html`.
   `MaterialPageRoute<String>`) and do not expect it to work inside a tiny
   box.
 * The page stops the media tracks and pauses/removes the video element in
-  `dispose`, so the camera light goes off as soon as the route is popped:
-  do not keep the route alive in a `Offstage`/`IndexedStack`.
+  `dispose`, so the camera light goes off as soon as the route is popped,
+  also when it is popped before the permission prompt was answered (the
+  stream that arrives later is stopped at once): do not keep the route alive
+  in a `Offstage`/`IndexedStack`.
+* A refused permission or a missing camera (a `DOMException`,
+  `NotAllowedError`/`NotFoundError`) shows a snack bar
+  (`error getting user Media ...`); the page then stays open until back or
+  the 60 s timeout, and returns `null`.
+* The page is built with `package:material_ui` (Scaffold, AppBar,
+  ScaffoldMessenger), like the tekartik apps: in an app built on
+  `package:flutter/material.dart` the page works but the error snack bar is
+  not shown (no `material_ui` `ScaffoldMessenger` above it). Build the app
+  with `package:material_ui/material_ui.dart` as in the examples below.
 * `lib/src/` (`ScanPage`, `registerViewFactoryWeb`, `scan_impl.dart`,
   `scan_stub.dart`) is private: never import it.
-* Testing: `flutter test` can only check the wiring
-  (`expect(qrCodeScanServiceWeb, isA<QRCodeScanService>())`), and widget tests
-  cannot open a camera — inject a fake `QRCodeScanService` in app tests. Try
-  the real thing with `flutter run -d chrome` on the repo's
+* Testing: in app tests inject a fake `QRCodeScanService` (example below).
+  The package's own `test/scan_page_camera_test.dart` replaces
+  `getUserMedia` (a refused camera, a page closed before the camera opened)
+  and runs with `flutter test --platform chrome` (plain `flutter test` skips
+  it). Try the real thing with `flutter run -d chrome` on the repo's
   `qrscan_flutter_example`.
 
 ## Examples
@@ -93,7 +105,7 @@ but the jsQR script must be loaded by `index.html`.
 
 ```dart
 import 'package:flutter/foundation.dart' show kIsWeb;
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:tekartik_qrscan_flutter_web/qrscan_flutter_web.dart';
 
 class ScanButton extends StatelessWidget {
@@ -127,7 +139,7 @@ class ScanButton extends StatelessWidget {
 
 ```dart
 import 'package:flutter/foundation.dart' show kIsWeb;
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:tekartik_qrscan_flutter_web/qrscan_flutter_web.dart';
 
 /// Throws when used off the web; on a mobile app, replace this fallback with
@@ -161,7 +173,7 @@ Future<Uri?> scanUrl(BuildContext context) async {
 ### Full page: scan, show the result, rescan
 
 ```dart
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:tekartik_qrscan_flutter_web/qrscan_flutter_web.dart';
 
 void main() => runApp(const MaterialApp(home: HomePage()));
@@ -210,7 +222,7 @@ class _HomePageState extends State<HomePage> {
 ### Test wiring, and fake the scan in app tests
 
 ```dart
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:tekartik_qrscan_flutter_web/qrscan_flutter_web.dart';
 

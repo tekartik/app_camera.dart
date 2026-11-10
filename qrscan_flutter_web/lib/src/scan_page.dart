@@ -97,13 +97,22 @@ class _ScanPageState extends State<ScanPage> {
     () async {
       try {
         // print('getting user media');
-        var stream = mediaStream = await mediaDevices.getUserMedia(
+        var stream = await mediaDevices.getUserMedia(
           GetUserMediaConstraint(
             video: GetUserMediaVideoConstraint(
               facingMode: mediaVideoConstraintFacingModeEnvironment,
             ),
           ),
         );
+        if (!mounted) {
+          // Closed (back, timeout) while the camera was opening: dispose
+          // did not see this stream.
+          for (var track in stream.getTracks()) {
+            track.stop();
+          }
+          return;
+        }
+        mediaStream = stream;
         /*
         var stream = await mediaDevices.getUserMedia(GetUserMediaConstraint(
             video: GetUserMediaVideoConstraint(deviceId: deviceInfo.deviceId)));
@@ -115,10 +124,14 @@ class _ScanPageState extends State<ScanPage> {
 
         unawaited(videoElement!.play());
         await _tick();
-      } on String catch (e) {
+      } catch (e) {
+        // A DOMException (NotAllowedError when the permission is refused,
+        // NotFoundError without camera...).
         // print('error getting user Media $e');
         if (mounted) {
-          ScaffoldMessenger.of(context).showSnackBar(
+          // None in an app built on package:flutter/material.dart (this
+          // page uses package:material_ui).
+          ScaffoldMessenger.maybeOf(context)?.showSnackBar(
             SnackBar(content: Text('error getting user Media $e')),
           );
         }

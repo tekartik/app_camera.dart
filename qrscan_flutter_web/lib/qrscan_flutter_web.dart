@@ -1,3 +1,7 @@
+/// QR code scan for Flutter web (camera + jsQR): [scanQrCode],
+/// [qrCodeScanServiceWeb].
+library;
+
 import 'package:material_ui/material_ui.dart';
 import 'package:tekartik_qrscan_flutter/qrscan_flutter.dart';
 
@@ -7,11 +11,14 @@ import 'src/scan_stub.dart'
 
 export 'package:tekartik_qrscan_flutter/qrscan_flutter.dart';
 
-/// Popup a scan QR code page for maximum 1 minute.
+/// Pushes a full screen page scanning QR codes with the camera (web only,
+/// an [UnsupportedError] elsewhere) for 1 minute at most.
 ///
-/// [options] are the scan options.
+/// [options] are the scan options (title, validator).
 ///
-/// Returns the QR code text scanned if any.
+/// Returns the QR code text, or null when the page is closed without one
+/// (back, or after 1 minute; a refused or missing camera is shown there). The
+/// page needs the jsQR script of `tekartik_js_qr` in `web/index.html`.
 Future<String?> scanQrCode(
   BuildContext context, {
   QRCodeScanOptions? options,
